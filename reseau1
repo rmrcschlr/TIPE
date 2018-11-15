@@ -1,0 +1,11 @@
+l=[]
+for i in range(4):
+    l.append(segment([0,i+1],i+1))
+for i in range(4):
+    l.append(segment([i+1,0],i+1))
+a=["C","T1,0","T1,1","T2,0","T2,1"]
+r=reseau(a,l,[])
+ligne1=ligne([l[4],l[1],l[5],l[0]],"ligne 1",[r.arrets[1],r.arrets[2]])
+ligne2=ligne([l[6],l[3],l[7],l[2]],"ligne 2",[r.arrets[3],r.arrets[4]])
+r.ajoute_ligne(ligne1)
+r.ajoute_ligne(ligne2)
