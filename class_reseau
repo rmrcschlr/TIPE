@@ -1,0 +1,105 @@
+def aplatir(liste) :
+    liste_aplatie = []
+    for loop1 in liste :
+        if type(loop1) == list :
+            for loop2 in loop1 :
+                liste_aplatie.append(loop2)
+        else :
+            liste_aplatie.append(loop1)
+    return liste_aplatie
+
+class segment:
+    
+    def __init__(self, l, d) :
+        self.adressage = l
+        self.duree = d
+        if l[0] == l[1] :
+            self.duree = 0
+
+class arret :
+    
+    def __init__(self, a, n) :
+        self.adresse = a
+        self.nom = n
+
+class ligne :
+    
+    def __init__(self, lsegment, n, larret) :
+        self.portions = lsegment
+        self.nom = n
+        self.terminus = larret
+    
+    def verifier_cyclicite(self):
+        cond = True
+        for i in range(len(self.portions)) :
+            if cond and self.portions[i-1].adressage[1] != self.portions[i].adressage[0] :
+                cond = False
+        return cond
+    
+    def liste_arrets(self) :
+        result = []
+        for i in range(len(self.portions)) :
+            if not (self.portions[i].adressage[0] in result) :
+                result.append(self.portions[i].adressage[0])
+        return result
+    
+    def duree_totale(self) :
+        somme = 0
+        for i in range(len(self.portions)) :
+            somme += self.portions[i].duree
+        return somme
+    
+    def duree_trajet(self, debut, fin) :
+        arret_actuel = debut
+        temps = 0
+        while arret_actuel != fin :
+            compteur = 0
+            while self.portions[compteur].adressage[0] != arret_actuel :
+                compteur += 1
+            temps += self.portions[compteur].duree
+            arret_actuel = self.portions[compteur].adressage[1]
+        return temps
+            
+class reseau :
+    
+    def __init__(self, larret, lsegment, lligne):
+        self.arrets = []
+        for i in range(len(larret)):
+            self.arrets.append(arret(i,larret[i]))
+        self.segments = lsegment
+        self.lignes = []
+        for i in range(len(lligne)) :
+            ajoute_ligne(lligne[i])
+    
+    def tout_relier_homogene(self, d) :
+        self.segments = []
+        for i in range(len(self.arrets)) :
+            for j in range(len(self.arrets)) :
+                self.segments.append(segment([i, j], d))
+    
+    def verifier_compatibilite(self, l) :
+        for i in l.portions :
+            if not (i in self.segments) :
+                return False
+        return True
+    
+    def ajoute_ligne(self, l) :
+        if self.verifier_compatibilite(l) and l.verifier_cyclicite() :
+            self.lignes.append(l)
+        else :
+            print("la ligne \"" + l.nom + "\" n'est pas compatible avec ce réseau")
+    
+    def liste_terminus(self) :
+        result = []
+        for i in range(len(self.lignes)) :
+            result.append(self.lignes[i].terminus)
+        return(aplatir(result))
+    
+    def correspondances(self, l, a) :
+        result = []
+        for i in range(len(self.lignes)) :
+            if self.lignes[i] != l :
+                for j in range(len(self.lignes[i].liste_arrets())) :
+                    if self.lignes[i].liste_arrets()[j] == a.adresse :
+                        result.append(self.lignes[i])
+        return result
