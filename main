@@ -1,3 +1,99 @@
-vide
-print("gne")
-ntm
+from constraint import *
+
+from numpy import *
+
+
+
+def aplatir(liste) :
+    liste_aplatie = []
+    for loop1 in liste :
+        if type(loop1) == list :
+            for loop2 in loop1 :
+                liste_aplatie.append(loop2)
+        else :
+            liste_aplatie.append(loop1)
+    return liste_aplatie
+
+def rencontre(liste1, liste2) :
+    for loop1 in range(len(liste1)) :
+        for loop2 in range(len(liste2)) :
+            if liste1[loop1] == liste2[loop2] :
+                return True
+    return False
+
+"""
+### Réseau avec 2 lignes et 1 correspondance
+Reseau = [[["terminus1,0", 0, []], ["croisement", 1, [2, 3]], ["terminus1,1", 2, []]], [["terminus1,1", 0, []], ["croisement", 2, [2, 3]], ["terminus1,0", 1, []]], [["terminus2,0", 0, []], ["croisement", 3,[0, 1]], ["terminus2,1", 4, []]], [["terminus2,1", 0, []], ["croisement", 4, [0, 1]], ["terminus2,0", 3, []]]]
+
+Frequences = [[[0, 9, 5]], [[0, 9, 5]], [[0, 9, 5]], [[0, 9, 5]]]
+
+### Réseau avec 3 lignes et 2 correspondances
+Reseau = [[['T1,0', 0, []], ['C1', 1, [2, 3]], ['C2', 2, [4, 5]], ['T1,1', 3, []]], [['T1,1', 0, []], ['C2', 3, [4, 5]], ['C1', 2, [2, 3]], ['T1,0', 1, []]], [['T2,0', 0, []], ['C1', 4, [0, 1]], ['T2,1', 5, []]], [['T2,1', 0, []], ['C1', 5, [0, 1]], ['T2,0', 4, []]], [['T3,0', 0, []], ['C2', 6, [0, 1]], ['T3,1', 7, []]], [['T3,1', 0, []], ['C2', 7, [0, 1]], ['T3,0', 6, []]]]
+
+Frequences = [[[0, 59, 5]], [[0, 59, 5]], [[0, 59, 10]], [[0, 59, 10]], [[0, 59, 10]], [[0, 59, 10]]]
+"""
+### Réseau avec 3 lignes et 3 correspondances
+Reseau = [[['T1,0', 0, []], ['C12', 1, [2, 3]], ['C13', 2, [4, 5]], ['T1,1', 3, []]], [['T1,1', 0, []], ['C13', 3, [4, 5]], ['C12', 2, [2, 3]], ['T1,0', 1, []]], [['T2,0', 0, []], ['C12', 4, [0, 1]], ['C23', 5, [4, 5]], ['T2,1', 6, []]], [['T2,1', 0, []], ['C23', 6, []], ['C12', 5, [0, 1]], ['T2,0', 4, []]], [['T3,0', 0, []], ['C23', 7, [2]], ['C13', 8, [0, 1]], ['T3,1', 9, []]], [['T3,1', 0, []], ['C13', 9, [0, 1]], ['C23', 8, [2]], ['T3,0', 7, []]]]
+
+Frequences = [[[0, 59, 5]], [[0, 59, 5]], [[0, 59, 5]], [[0, 59, 5]], [[0, 59, 5]], [[0, 59, 5]]]
+
+
+
+Critere = 2
+
+
+
+variables = []
+
+horaires_fixes = []
+
+horaires_par_ligne = []
+
+table = []
+
+problem = Problem()
+
+
+
+for ligne in range(len(Frequences)) :
+    compteur = 0
+    horaires_par_ligne.append([])
+    debut = Frequences[ligne][0][0]
+    for tranche in Frequences[ligne] :
+        while debut + tranche[2] - 1 in range(tranche[0], tranche[1] + 1) :
+            problem.addVariable(str(ligne) + "," + str(compteur), range(debut, debut + tranche[2]))
+            variables.append([str(ligne) + "," + str(compteur), array(range(debut, debut + tranche[2]))])
+            horaires_par_ligne[-1].append(str(ligne) + "," + str(compteur))
+            compteur += 1
+            debut += tranche[2]
+
+for i in range(len(variables)) :
+    temps1 = 0
+    for arret1 in Reseau[int(variables[i][0].split(",")[0])] :
+        temps1 += arret1[1]
+        if arret1[2] != [] :
+            if not (arret1[0] in aplatir(horaires_fixes)) :
+                    horaires_fixes.append([arret1[0]])
+            else :
+                for loop1 in range(len(horaires_fixes) - 1) :
+                    if horaires_fixes[loop1][0] == arret1[0] :
+                        (horaires_fixes[loop1], horaires_fixes[-1]) = (horaires_fixes[-1], horaires_fixes[loop1])
+            for j in range(i + 1, len(variables)) :
+                if int(variables[j][0].split(",")[0]) in arret1[2] and not [variables[i][0], int(variables[j][0].split(",")[0])] in horaires_fixes[-1] and not [variables[j][0], int(variables[i][0].split(",")[0])] in horaires_fixes[-1]:
+                    temps2 = 0
+                    for arret2 in Reseau[int(variables[j][0].split(",")[0])] :
+                        temps2 += arret2[1]
+                        if arret1[0] == arret2[0] and rencontre(variables[i][1] + temps1, variables[j][1] + temps2) :
+                            problem.addConstraint(lambda a, b, temps1 = temps1, temps2 = temps2: abs((a + temps1) - (b + temps2)) <= Critere, (variables[i][0], variables[j][0]))
+                            horaires_fixes[-1].append([variables[i][0], int(variables[j][0].split(",")[0])])
+                            horaires_fixes[-1].append([variables[j][0], int(variables[i][0].split(",")[0])])
+
+Solution = problem.getSolution()
+
+if Solution != None :
+    for ligne in range(len(Frequences)) :
+        table.append([])
+        for horaire in horaires_par_ligne[ligne] :
+            table[-1].append(Solution[horaire])
+
+print(table)
