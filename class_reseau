@@ -1,5 +1,4 @@
 def aplatir(liste) :
-    liste_aplatie = []
     for loop1 in liste :
         if type(loop1) == list :
             for loop2 in loop1 :
@@ -24,9 +23,9 @@ class arret :
 
 class ligne :
     
-    def __init__(self, lsegment, n, larret) :
-        self.portions = lsegment
+    def __init__(self, n, lsegment, larret) :
         self.nom = n
+        self.portions = lsegment
         self.terminus = larret
     
     def verifier_cyclicite(self):
