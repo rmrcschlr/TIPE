@@ -103,3 +103,33 @@ class reseau :
                     if self.lignes[i].liste_arrets()[j] == a.adresse :
                         result.append(self.lignes[i])
         return result
+
+class frequences :
+    
+    def __init__(self, r) :
+        self.liste
+        for i in range(len(r.lignes)) :
+            liste.append([])
+    
+    def trie(self) :
+        for i in range(len(self.liste)) :
+            #tri 
+    
+    def ajouter_tranche_horaire(self, ligne, debut, fin, cadence) :
+        self.liste[ligne].append([debut, fin, cadence])
+    
+    def tranches_ligne(self, ligne) :
+        return self.liste[ligne]
+    
+    def normalise(self) :
+        for i in range(len(self.liste)) :
+            for j in range(len(tranches_ligne(i)) - 1) :
+                if self.liste[i][j][1] > self.liste[i][j + 1][0] :
+                    moyenne = (self.liste[i][j][1] + self.liste[i][j + 1][0]) / 2
+                    self.liste[i][j][1] = moyenne
+                    self.liste[i][j + 1][0] = moyenne
+    
+    def liste_departs(self, ligne) :
+        liste = self.tranches_lignes(ligne)
+        result = [liste[0][0]]
+        while result[-1] <= liste[-1][1] :
