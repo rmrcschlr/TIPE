@@ -63,23 +63,23 @@ class Reseau :
         for i in range(len(lignes)) :
             ajoute_ligne(lignes[i])
     
-    def tout_relier_homogene(self, d) :
+    def tout_relier_homogene(self, duree) :
         self.segments = []
         for i in range(len(self.arrets)) :
             for j in range(len(self.arrets)) :
-                self.segments.append(segment([i, j], d))
+                self.segments.append(segment([i, j], duree))
     
-    def verifier_compatibilite(self, l) :
-        for i in l.portions :
+    def verifier_compatibilite(self, lligne) :
+        for i in ligne.portions :
             if not (i in self.segments) :
                 return False
         return True
     
-    def ajoute_ligne(self, l) :
-        if self.verifier_compatibilite(l) and l.verifier_cyclicite() :
-            self.lignes.append(l)
+    def ajoute_ligne(self, ligne) :
+        if self.verifier_compatibilite(ligne) and ligneverifier_cyclicite() :
+            self.lignes.append(ligne)
         else :
-            print("la ligne \"" + l.nom + "\" n'est pas compatible avec ce réseau")
+            print("la ligne \"" + ligne.nom + "\" n'est pas compatible avec ce réseau")
     
     def liste_terminus(self) :
         result = []
@@ -87,12 +87,12 @@ class Reseau :
             result.append(self.lignes[i].terminus)
         return(result)
     
-    def correspondances(self, l, a) :
+    def correspondances(self, ligne, arret) :
         result = []
         for i in range(len(self.lignes)) :
-            if self.lignes[i] != l :
+            if self.lignes[i] != ligne :
                 for j in range(len(self.lignes[i].liste_arrets())) :
-                    if self.lignes[i].liste_arrets()[j] == a.adresse :
+                    if self.lignes[i].liste_arrets()[j] == arret.adresse :
                         result.append(self.lignes[i])
         return result
 
