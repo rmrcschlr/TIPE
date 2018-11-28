@@ -1,36 +1,36 @@
-class segment :
+class Segment :
     
-    def __init__(self, l, d) :
-        self.adressage = l
-        self.duree = d
-        if l[0] == l[1] :
+    def __init__(self, adresses, duree) :
+        self.adresses = adresses
+        self.duree = duree
+        if adresses[0] == adresses[1] :
             self.duree = 0
 
-class arret :
+class Arret :
     
-    def __init__(self, a, n) :
-        self.adresse = a
-        self.nom = n
+    def __init__(self, adresse, nom) :
+        self.adresse = adresse
+        self.nom = nom
 
-class ligne :
+class Ligne :
     
-    def __init__(self, n, lsegment, larret) :
-        self.nom = n
-        self.portions = lsegment
-        self.terminus = larret
+    def __init__(self, nom, portions, terminus) :
+        self.nom = nom
+        self.portions = portions
+        self.terminus = terminus
     
     def verifier_cyclicite(self):
         cond = True
         for i in range(len(self.portions)) :
-            if cond and self.portions[i-1].adressage[1] != self.portions[i].adressage[0] :
+            if cond and self.portions[i-1].adresses[1] != self.portions[i].adresses[0] :
                 cond = False
         return cond
     
     def liste_arrets(self) :
         result = []
         for i in range(len(self.portions)) :
-            if not (self.portions[i].adressage[0] in result) :
-                result.append(self.portions[i].adressage[0])
+            if not (self.portions[i].adresses[0] in result) :
+                result.append(self.portions[i].adresses[0])
         return result
     
     def duree_totale(self) :
@@ -44,22 +44,22 @@ class ligne :
         temps = 0
         while arret_actuel != fin :
             compteur = 0
-            while self.portions[compteur].adressage[0] != arret_actuel :
+            while self.portions[compteur].adresses[0] != arret_actuel :
                 compteur += 1
             temps += self.portions[compteur].duree
-            arret_actuel = self.portions[compteur].adressage[1]
+            arret_actuel = self.portions[compteur].adresses[1]
         return temps
             
-class reseau :
+class Reseau :
     
-    def __init__(self, larret, lsegment, lligne):
+    def __init__(self, arrets, segments, lignes):
         self.arrets = []
-        for i in range(len(larret)):
-            self.arrets.append(arret(i,larret[i]))
-        self.segments = lsegment
+        for i in range(len(arrets)):
+            self.arrets.append(Arret(i,arrets[i]))
+        self.segments = segments
         self.lignes = []
-        for i in range(len(lligne)) :
-            ajoute_ligne(lligne[i])
+        for i in range(len(lignes)) :
+            ajoute_ligne(lignes[i])
     
     def tout_relier_homogene(self, d) :
         self.segments = []
@@ -94,11 +94,11 @@ class reseau :
                         result.append(self.lignes[i])
         return result
 
-class frequences :
+class Frequences :
     
-    def __init__(self, r) :
+    def __init__(self, reseau) :
         self.liste
-        for i in range(len(r.lignes)) :
+        for i in range(len(reseau.lignes)) :
             liste.append([])
     
     def trie_ligne(self, ligne) :
