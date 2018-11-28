@@ -12,6 +12,8 @@ class Arret :
         self.adresse = adresse
         self.nom = nom
 
+    # ou plutot faire un dictionnaire, a voir
+
 class Ligne :
     
     def __init__(self, nom, portions, terminus) :
