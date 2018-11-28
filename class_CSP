@@ -1,0 +1,67 @@
+class CSP :
+    
+    def __init__(self, noms, domaines) :
+        self.liste = []
+        self.ajoute_variables(noms, domaines)
+        self.contraintes = []
+    
+    def noms(self) :
+        result = []
+        for i in range(len(self.liste)) :
+            result.append(self.liste[i][1])
+        return result
+    
+    def ajoute_variable(self, nom, domaine) :
+        if nom in self.noms() :
+            print("la variable existe déjà")
+        else :
+            self.liste.append([0, nom, domaine])
+    
+    def ajoute_variables(self, noms, domaines) :
+        if len(noms) == len(domaines) :
+            for i in range(len(noms)) :
+                self.ajoute_variable(noms[i], domaines[i])
+        elif len(domaines) == 1 :
+            for i in range(len(noms)) :
+                self.ajoute_variable(noms[i], domaines)
+        else :
+            print("le nombre de domaines ne correspond pas à celui des noms")
+    
+    def ajoute_contrainte(self, contrainte, variables) :
+        for i in range(len(variables)) :
+            if not(variables[i] in self.noms()) :
+                return "la variable \"" + variables[i] + "\" n'existe pas"
+        self.contraintes.append(contrainte, variables)
+    
+    def contraintes_sur_variable(self, variable) :
+        result = []
+        for i in range(len(self.contraintes)) :
+            if variable in self.contraintes[i][1] :
+                result.append(i)
+        return result
+    
+    def arite(self, variable) :
+        return len(self.contraintes_sur_variable(variable)
+    
+    def trie_variables_statique(self) :
+        for i in range(len(self.liste)) :
+            self.liste[i][0] = self.arite(self.liste[i][1])
+        self.liste.sort()
+        self.liste.reverse()
+    
+    def anticipation(self, affectation) :
+        condition = True
+        i = 0
+        while condition and i < len(self.liste) :
+            condition = self.noms()[i] in affectation
+            i += 1
+        if condition :
+            return(True, affectation)
+        indice = len(a)
+        variable = self.liste[indice]
+        for valeur in variable[2] :
+            
+    
+    def solution_par_anticipation(self) :
+        affectation = {}
+        self.anticipation(affectation)
