@@ -1,4 +1,4 @@
-class segment:
+class segment :
     
     def __init__(self, l, d) :
         self.adressage = l
