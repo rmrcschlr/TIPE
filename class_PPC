@@ -1,4 +1,4 @@
-class CSP :
+class PPC :
     
     def __init__(self, noms, domaines) :
         self.liste = []
