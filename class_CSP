@@ -49,6 +49,9 @@ class CSP :
         self.liste.sort()
         self.liste.reverse()
     
+    def affectation_consistante(self, affectation) :
+        
+    
     def anticipation(self, affectation) :
         condition = True
         i = 0
@@ -57,11 +60,16 @@ class CSP :
             i += 1
         if condition :
             return(True, affectation)
-        indice = len(a)
-        variable = self.liste[indice]
-        for valeur in variable[2] :
+        indice = len(affectation)
+        variable_i = self.liste[indice]
+        for valeur_i in variable_i[2] :
+            liste_domaines_temporaires = (len(self.liste) - indice) * [[]] 
+            for variable_j in self.liste[indice + 1:] :
+                affectation_temporaire = affectation
+                for valeur_j in #domaine variable_j
+                affectation_temporaire[variable_j] = 
             
     
     def solution_par_anticipation(self) :
         affectation = {}
-        self.anticipation(affectation)
+self.anticipation(affectation)
