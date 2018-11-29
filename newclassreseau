@@ -1,0 +1,32 @@
+def creer_liste(t,x):
+    l=[]
+    for i in range(t):
+        l.append(x)
+    return l
+    
+def chemin(l,d):
+    L=[]
+    for i in range(len(l)-1):
+        L.append([i,i+1,d[i]])
+    L.append([len(l)-1,0,d[len(l)]])
+
+class reseau :
+    
+    def __init__(self):
+        self.liste_arrets = []
+        self.liste_lignes = []
+        self.matrice_segements = [[]]
+    
+    def ajoute_arret(self,nom):
+        if self.matrice_segements == [[]] :
+            self.matrice_segements = [[0]]
+        else :
+            self.liste_arrets.append(nom)
+            for i in range(len(self.matrice_segements)):
+                self.matrice_segements[i].append(-1)
+            self.matrice_segements.append(creer_liste(len(self.matrice_segements),-1)+[0])
+            
+    def ajoute_ligne(self,nom,l,terminus):
+        l=[]
+        for i in range(len(l)):
+            l.append(l[i][:2]+[(i in terminus)]) 
