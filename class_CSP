@@ -41,7 +41,7 @@ class CSP :
         return result
     
     def arite(self, variable) :
-        return len(self.contraintes_sur_variable(variable)
+        return len(self.contraintes_sur_variable(variable))
     
     def trie_variables_statique(self) :
         for i in range(len(self.liste)) :
