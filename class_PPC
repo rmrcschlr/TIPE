@@ -1,8 +1,18 @@
-class PPC :
+def inclus(liste1, liste2) :
+    if liste1 == [] :
+        return False
+    result = True
+    loop1 = 0
+    while result and loop1 < len(liste1) :
+        result = liste1[loop1] in liste2
+        loop1 += 1
+    return result
+
+class CSP :
     
-    def __init__(self, noms, domaines) :
+    def __init__(self, noms = [], domaine = []) :
         self.liste = []
-        self.ajoute_variables(noms, domaines)
+        self.ajoute_variables(noms, domaine)
         self.contraintes = []
     
     def noms(self) :
@@ -17,21 +27,18 @@ class PPC :
         else :
             self.liste.append([0, nom, domaine])
     
-    def ajoute_variables(self, noms, domaines) :
-        if len(noms) == len(domaines) :
-            for i in range(len(noms)) :
-                self.ajoute_variable(noms[i], domaines[i])
-        elif len(domaines) == 1 :
-            for i in range(len(noms)) :
-                self.ajoute_variable(noms[i], domaines)
+    def ajoute_variables(self, noms, domaine) :
+        if type(noms) is not list :
+            self.ajoute_variable(noms, domaine)
         else :
-            print("le nombre de domaines ne correspond pas à celui des noms")
+            for i in range(len(noms)) :
+                self.ajoute_variable(noms[i], domaine)
     
     def ajoute_contrainte(self, contrainte, variables) :
         for i in range(len(variables)) :
             if not(variables[i] in self.noms()) :
                 return "la variable \"" + variables[i] + "\" n'existe pas"
-        self.contraintes.append(contrainte, variables)
+        self.contraintes.append([contrainte, variables])
     
     def contraintes_sur_variable(self, variable) :
         result = []
@@ -49,27 +56,55 @@ class PPC :
         self.liste.sort()
         self.liste.reverse()
     
-    def affectation_consistante(self, affectation) :
-        
-    
-    def anticipation(self, affectation) :
-        condition = True
-        i = 0
-        while condition and i < len(self.liste) :
-            condition = self.noms()[i] in affectation
-            i += 1
-        if condition :
-            return(True, affectation)
-        indice = len(affectation)
-        variable_i = self.liste[indice]
-        for valeur_i in variable_i[2] :
-            liste_domaines_temporaires = (len(self.liste) - indice) * [[]] 
-            for variable_j in self.liste[indice + 1:] :
-                affectation_temporaire = affectation
-                for valeur_j in #domaine variable_j
-                affectation_temporaire[variable_j] = 
-            
-    
-    def solution_par_anticipation(self) :
-        affectation = {}
-self.anticipation(affectation)
+def affectation_consistante(csp, affectation) :
+    condition = True
+    i = 0
+    while condition and i < len(csp.contraintes) :
+        if inclus(csp.contraintes[i][1], list(affectation.keys())) :
+            valeurs = []
+            for j in range(len(csp.contraintes[i][1])) :
+                valeurs.append(affectation[csp.contraintes[i][1][j]])
+            condition = condition and csp.contraintes[i][0](*valeurs)
+        i += 1
+    return condition
+
+def anticipation(csp, affectation) :
+    print(affectation)
+    condition = True
+    i = 0
+    while condition and i < len(csp.liste) :
+        condition = csp.noms()[i] in affectation
+        i += 1
+    if condition :
+        return (True, affectation)
+    i = len(affectation)
+    variable_i = csp.liste[i]
+    for valeur_i in variable_i[2] :
+        liste_domaines_temporaires = []
+        j = i + 1
+        condition_valeur_i = True
+        while condition_valeur_i and j < len(csp.liste) :
+            variable_j = csp.liste[j]
+            liste_domaines_temporaires.append([])
+            for valeur_j in variable_j[2] :
+                affectation_temporaire = affectation.copy()
+                affectation_temporaire[variable_i[1]] = valeur_i
+                affectation_temporaire[variable_j[1]] = valeur_j
+                if affectation_consistante(csp, affectation_temporaire) :
+                    liste_domaines_temporaires[j - i - 1].append(valeur_j)
+            if liste_domaines_temporaires[j - i - 1] == [] :
+                condition_valeur_i = False
+            j += 1
+        if [] not in liste_domaines_temporaires :
+            affectation[variable_i[1]] = valeur_i
+            for j in range(len(liste_domaines_temporaires)) :
+                csp.liste[j + i + 1][2] = liste_domaines_temporaires[j]
+            if anticipation(csp, affectation)[0] :
+                return (True, affectation)
+    print('fin')
+    return (False, affectation)
+
+def solution_par_anticipation(csp) :
+    csp.trie_variables_statique()
+    affectation = {}
+    return anticipation(csp, affectation)
