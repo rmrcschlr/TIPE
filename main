@@ -67,6 +67,8 @@ for ligne in range(len(Frequences)) :
             compteur += 1
             debut += tranche[2]
 
+#si possible, mettre le domaine entier pour chaque variable, puis mettre des contraintes visant a avoir l'écart entre chaque départs qui respecte la liste Frequences
+
 for i in range(len(variables)) :
     temps1 = 0
     for arret1 in Reseau[int(variables[i][0].split(",")[0])] :
