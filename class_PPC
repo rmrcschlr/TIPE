@@ -69,7 +69,6 @@ def affectation_consistante(csp, affectation) :
     return condition
 
 def anticipation(csp, affectation) :
-    print(affectation)
     condition = True
     i = 0
     while condition and i < len(csp.liste) :
@@ -101,7 +100,6 @@ def anticipation(csp, affectation) :
                 csp.liste[j + i + 1][2] = liste_domaines_temporaires[j]
             if anticipation(csp, affectation)[0] :
                 return (True, affectation)
-    print('fin')
     return (False, affectation)
 
 def solution_par_anticipation(csp) :
