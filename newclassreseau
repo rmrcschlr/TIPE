@@ -18,15 +18,33 @@ class reseau :
         self.matrice_segements = [[]]
     
     def ajoute_arret(self,nom):
+        self.liste_arrets.append(nom)
         if self.matrice_segements == [[]] :
             self.matrice_segements = [[0]]
         else :
-            self.liste_arrets.append(nom)
             for i in range(len(self.matrice_segements)):
                 self.matrice_segements[i].append(-1)
             self.matrice_segements.append(creer_liste(len(self.matrice_segements),-1)+[0])
             
-    def ajoute_ligne(self,nom,l,terminus):
-        l=[]
+    def ajoute_ligne(self,nom,l,terminus,cond=False):
+        L=[]
         for i in range(len(l)):
-            l.append(l[i][:2]+[(i in terminus)]) 
+            L.append(l[i][:2]+[(i in terminus)])
+            self.matrice_segements[l[i][0]][l[i][1]]=l[i][2]
+        self.liste_lignes.append(L+[nom])
+        
+    def affiche_ligne(self,n):
+        s=self.liste_arrets[self.liste_lignes[n][0][0]]+" -> "
+        for i in range(len(self.liste_lignes[n])-1):
+            s=s+self.liste_arrets[self.liste_lignes[n][i][1]]+" -> "
+        print(s[:len(s)-4])
+        
+    def correspondance(self,a,l):
+        L=[]
+        ligne=self.liste_lignes[l]
+        for k,i in enumerate(self.liste_lignes,0):
+            if i != ligne :
+                for j in range(len(i)-1):
+                    if j==a:
+                        L.append(k)
+        return k
