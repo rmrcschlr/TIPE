@@ -15,22 +15,22 @@ class reseau :
     def __init__(self):
         self.liste_arrets = []
         self.liste_lignes = []
-        self.matrice_segements = [[]]
+        self.matrice_segments = [[]]
     
     def ajoute_arret(self,nom):
         self.liste_arrets.append(nom)
-        if self.matrice_segements == [[]] :
-            self.matrice_segements = [[0]]
+        if self.matrice_segments == [[]] :
+            self.matrice_segments = [[0]]
         else :
-            for i in range(len(self.matrice_segements)):
-                self.matrice_segements[i].append(-1)
-            self.matrice_segements.append(creer_liste(len(self.matrice_segements),-1)+[0])
+            for i in range(len(self.matrice_segments)):
+                self.matrice_segments[i].append(-1)
+            self.matrice_segments.append(creer_liste(len(self.matrice_segments),-1)+[0])
             
     def ajoute_ligne(self,nom,l,terminus,cond=False):
         L=[]
         for i in range(len(l)):
             L.append(l[i][:2]+[(i in terminus)])
-            self.matrice_segements[l[i][0]][l[i][1]]=l[i][2]
+            self.matrice_segments[l[i][0]][l[i][1]]=l[i][2]
         self.liste_lignes.append(L+[nom])
         
     def affiche_ligne(self,n):
@@ -47,4 +47,17 @@ class reseau :
                 for j in range(len(i)-1):
                     if j==a:
                         L.append(k)
-        return k
+        return L
+        
+    def duree(self,ligne,arret_init,arret_final):
+        l=[]
+        for k,j in enumerate(self.liste_lignes[ligne],0):
+            m=1
+            s=0
+            if j[k][0]==arret_init:
+                for i in range(t,t+len(ligne)):
+                    s+=(m*self.matrice_segments[ligne[i%len(ligne)][0]][ligne[i%len(ligne)][1]])
+                    if ligne[i%len(ligne)][1]==arret_final:
+                        m=0
+                l.append(s)
+        return min(l)
