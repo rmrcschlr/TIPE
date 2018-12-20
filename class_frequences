@@ -1,4 +1,5 @@
 class frequences :
     
     def __init__() :
-        self.liste = []
+        self.liste_lignes = []
+        self.matrice = []
