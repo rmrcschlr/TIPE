@@ -1,0 +1,4 @@
+class frequences :
+    
+    def __init__() :
+        self.liste = []
