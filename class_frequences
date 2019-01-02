@@ -1,5 +1,0 @@
-class frequences :
-    
-    def __init__() :
-        self.liste_lignes = []
-        self.matrice = []
