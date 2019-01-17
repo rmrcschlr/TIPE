@@ -14,18 +14,21 @@ class CSP :
         self.liste = []
         self.ajoute_variables(noms, domaine)
         self.contraintes = []
+    # CSP -> string list -> int list -> CSP
     
     def noms(self) :
         result = []
         for i in range(len(self.liste)) :
             result.append(self.liste[i][1])
         return result
+    # CSP -> string
     
     def ajoute_variable(self, nom, domaine) :
         if nom in self.noms() :
             print("la variable existe déjà")
         else :
-            self.liste.append([0, nom, domaine])
+            self.liste.append([0, nom, domaine]) # le O est l'arite de la variable
+    # CSP -> string -> int list -> unit
     
     def ajoute_variables(self, noms, domaine) :
         if type(noms) is not list :
@@ -33,12 +36,14 @@ class CSP :
         else :
             for i in range(len(noms)) :
                 self.ajoute_variable(noms[i], domaine)
+    # CSP -> string list -> int list -> unit
     
     def ajoute_contrainte(self, contrainte, variables) :
         for i in range(len(variables)) :
             if not(variables[i] in self.noms()) :
                 return "la variable \"" + variables[i] + "\" n'existe pas"
         self.contraintes.append([contrainte, variables])
+    # CSP -> fun( ints -> bool )-> string list
     
     def contraintes_sur_variable(self, variable) :
         result = []
@@ -46,15 +51,18 @@ class CSP :
             if variable in self.contraintes[i][1] :
                 result.append(i)
         return result
+    # CSP -> string -> int list
     
     def arite(self, variable) :
         return len(self.contraintes_sur_variable(variable))
+    # CSP -> string -> int
     
     def trie_variables_statique(self) :
         for i in range(len(self.liste)) :
             self.liste[i][0] = self.arite(self.liste[i][1])
         self.liste.sort()
         self.liste.reverse()
+    # CSP -> unit
     
 def affectation_consistante(csp, affectation) :
     condition = True
@@ -67,8 +75,10 @@ def affectation_consistante(csp, affectation) :
             condition = condition and csp.contraintes[i][0](*valeurs)
         i += 1
     return condition
+# CSP -> int dict -> bool
 
 def anticipation(csp, affectation) :
+    print(affectation)
     condition = True
     i = 0
     while condition and i < len(csp.liste) :
@@ -100,9 +110,12 @@ def anticipation(csp, affectation) :
                 csp.liste[j + i + 1][2] = liste_domaines_temporaires[j]
             if anticipation(csp, affectation)[0] :
                 return (True, affectation)
+    print('fin')
     return (False, affectation)
+# CSP -> int dict -> (bool, int dict)
 
 def solution_par_anticipation(csp) :
     csp.trie_variables_statique()
     affectation = {}
     return anticipation(csp, affectation)
+# CSP -> (bool, int dict)
