@@ -1,0 +1,5 @@
+Critere = 3
+
+for indice_ligne in range(len(Reseau.liste_ligne)) :
+    for terminus in Reseau.ligne_terminus(indice_ligne) :
+         
