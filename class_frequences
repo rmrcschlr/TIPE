@@ -1,0 +1,43 @@
+class frequences :
+    
+    def __init__(self, reseau) :
+        self.liste = []
+        for i in range(len(reseau.liste_lignes)) :
+            self.liste.append([reseau.liste_lignes[i][0]])
+    # frequences -> reseau -> frequences
+    
+    def ajouter_ligne(self, nom) :
+        self.liste.append([nom])
+    # frequences -> string -> unit
+    
+    def ajouter_frequence(self, indice_ligne, debut, fin, freq) :
+        self.liste[indice_ligne].append([debut, fin, freq])
+    # frequences -> int -> float -> float -> float -> unit
+    
+    def trier_ligne(self,indice_ligne) :
+        self.liste[indice_ligne].sort()
+        i = 1
+        while i < len(self.liste[indice_ligne]) :
+            if self.liste[indice_ligne][i - 1] == self.liste[indice_ligne][i] :
+                self.liste[indice_ligne]].pop(i)
+                i -= 1
+            i += 1
+    # frequences -> int -> unit
+    
+    def trier(self) :
+        for i in range(len(self.liste)) :
+            self.trie_ligne(i)
+    # frequences -> unit
+    
+    def freq_ligne(self, indice_ligne) :
+        return self.liste[indice_ligne]
+    # frequences -> int -> list of (float, float, float) 
+    
+    def normaliser(self) :
+        self.trier()
+        for i in range(len(self.liste)) :
+            for j in range(len(self.freq_ligne(i)) - 1) :
+                if self.liste[i][j][1] > self.liste[i][j + 1][0] :
+                    moyenne = (self.liste[i][j][1] + self.liste[i][j + 1][0]) // 2
+                    self.liste[i][j][1], self.liste[i][j + 1][0] = moyenne, moyenne
+    # frequences -> unit
