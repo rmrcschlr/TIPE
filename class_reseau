@@ -4,7 +4,7 @@ class reseau :
         self.liste_arrets = arrets
         self.liste_lignes = []
         self.matrice_segments = matrice
-    # reseau -> list of string -> list of list of float -> reseau
+    # reseau -> list of string -> list of list of int -> reseau
     
     def ajouter_arret(self, nom) :
         self.liste_arrets.append(nom)
@@ -15,7 +15,7 @@ class reseau :
     
     def changer_temps(self, indice_arret_init, indice_arret_final, temps) :
         self.matrice_segments[indice_arret_init][indice_arret_final] = temps
-    # reseau -> int -> int -> float -> unit
+    # reseau -> int -> int -> int -> unit
     
     def ligne_correcte(self, ligne) :
         condition = True
@@ -121,4 +121,4 @@ class reseau :
         except ValueError :
             print('Je ne peux pas calculer pour l\'instant la durée')
             return -1
-    # reseau -> int -> string -> string -> float
+    # reseau -> int -> string -> string -> int
