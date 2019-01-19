@@ -69,7 +69,10 @@ class reseau :
     # reseau -> int -> string
     
     def afficher_ligne(self, indice) :
-        return self.liste_lignes[indice][1]
+        result = []
+        for i in range(len(self.ligne_arrets(indice))) :
+             result.append(self.nom_arret(self.ligne_arrets(indice)[i]))
+        return result
     # reseau -> string -> list of string
     
     def correspondance(self, indice_arret, indice_ligne):
