@@ -1,5 +1,4 @@
-Critere = 3
-
-for indice_ligne in range(len(Reseau.liste_ligne)) :
-    for terminus in Reseau.ligne_terminus(indice_ligne) :
-         
+#faire d'abord sans critere si ca marche, puis faire une boucle while sur le critere
+for indice_ligne in range(len(RESEAU.liste_ligne)) :
+    for terminus in RESEAU.ligne_terminus(indice_ligne) :
+        for 
