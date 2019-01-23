@@ -1,10 +1,13 @@
 def inclus(liste1, liste2) :
-    if liste1 == [] :
+    if liste1 == [] or len(liste1) > len(liste2) :
         return False
+    liste2_bis = liste2.copy()  
     result = True
     loop1 = 0
     while result and loop1 < len(liste1) :
-        result = liste1[loop1] in liste2
+        result = liste1[loop1] in liste2_bis
+        if result :
+            liste2_bis.remove(liste1[loop1])
         loop1 += 1
     return result
 
@@ -78,11 +81,10 @@ def affectation_consistante(csp, affectation) :
 # CSP -> int dict -> bool
 
 def anticipation(csp, affectation) :
-    print(affectation)
     condition = True
     i = 0
     while condition and i < len(csp.liste) :
-        condition = csp.noms()[i] in affectation
+        condition = condition and csp.noms()[i] in affectation
         i += 1
     if condition :
         return (True, affectation)
@@ -110,7 +112,6 @@ def anticipation(csp, affectation) :
                 csp.liste[j + i + 1][2] = liste_domaines_temporaires[j]
             if anticipation(csp, affectation)[0] :
                 return (True, affectation)
-    print('fin')
     return (False, affectation)
 # CSP -> int dict -> (bool, int dict)
 
