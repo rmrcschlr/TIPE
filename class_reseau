@@ -1,52 +1,30 @@
-class reseau :
+def inclus(liste1, liste2) :
+    if liste1 == [] or len(liste1) > len(liste2) :
+        return False
+    liste2_bis = liste2.copy()  
+    result = True
+    loop1 = 0
+    while result and loop1 < len(liste1) :
+        result = liste1[loop1] in liste2_bis
+        if result :
+            liste2_bis.remove(liste1[loop1])
+        loop1 += 1
+    return result
+
+class Reseau :
     
     def __init__(self, arrets, matrice) :
         self.liste_arrets = arrets
         self.liste_lignes = []
         self.matrice_segments = matrice
-    # reseau -> list of string -> list of list of float -> reseau
+    # Reseau -> list of str -> list of list of float -> Reseau
     
     def ajouter_arret(self, nom) :
         self.liste_arrets.append(nom)
         for i in range(len(self.liste_arrets)) :
             self.matrice_segments[i].append(-1)
         self.matrice_segments.append((len(self.matrice_segments) * [-1]) + [0])
-    # reseau -> string -> unit
-    
-    def changer_temps(self, indice_arret_init, indice_arret_final, temps) :
-        self.matrice_segments[indice_arret_init][indice_arret_final] = temps
-    # reseau -> int -> int -> float -> unit
-    
-    def ligne_correcte(self, ligne) :
-        condition = True
-        for arret in ligne[1] :
-            condition = condition and (arret < len(self.liste_arrets))
-        for terminus in ligne[2] :
-            condition = condition and (terminus in ligne[1])
-        return condition
-    # reseau -> (string, list of int, list of int) -> bool
-    
-    def ajouter_ligne(self, nom, arrets, terminus) :
-        liste_indices_arrets = []
-        for arret in arrets :
-            liste_indices_arrets.append(self.indice_arret(arret))
-        liste_indices_terminus = []
-        for arret in terminus :
-            liste_indices_terminus.append(self.indice_arret(arret))
-        ligne = [nom, liste_indices_arrets, liste_indices_terminus]
-        if self.ligne_correcte(ligne) :
-            self.liste_lignes.append(ligne)
-        else :
-            print("La ligne n'est pas correcte")
-    # reseau -> string -> list of str -> list of str -> unit
-    
-    def ligne_arrets(self, indice) :
-        return reseau.liste_lignes[indice][1]
-    # reseau -> int -> int list
-    
-    def ligne_terminus(self, indice) :
-        return reseau.liste_lignes[indice][2]
-    # reseau -> int -> int list
+    # Reseau -> str -> unit
     
     def indice_arret(self, nom) :
         indice = 0
@@ -55,7 +33,31 @@ class reseau :
         if indice == len(self.liste_arrets) :
             return -1
         return indice
-    # reseau -> string -> int
+    # Reseau -> string -> int
+    
+    def nom_arret(self, indice) :
+        return self.liste_arrets[indice]
+    # Reseau -> int -> str
+    
+    def ligne_correcte(self, ligne) :
+        return inclus(ligne[1], self.liste_arrets) and inclus(ligne[2], ligne[1])
+    # Reseau -> [str, list of int, list of int] -> bool
+
+    def ajouter_ligne(self, nom, arrets, terminus) :
+        assert (arrets != [] and terminus != [])
+        liste_indices_arrets = []
+        for arret in arrets :
+            liste_indices_arrets.append(self.indice_arret(arret))
+        liste_indices_terminus = []
+        for arret in terminus :
+            liste_indices_terminus.append(self.indice_arret(arret))
+        ligne = [nom, liste_indices_arrets, liste_indices_terminus]
+        if self.ligne_correcte(ligne) :
+            #arranger_terminus(ligne)
+            self.liste_lignes.append(ligne)
+        else :
+            print("La ligne n'est pas correcte")
+    # Reseau -> str -> list of str -> list of str -> unit
     
     def indice_ligne(self, nom) :
         indice = 0
@@ -64,22 +66,30 @@ class reseau :
         if indice == len(self.liste_lignes) :
             return -1
         return indice
-    # reseau -> string -> int
-    
-    def nom_arret(self, indice) :
-        return self.liste_arrets[indice]
-    # reseau -> int -> string
+    # Reseau -> str -> int
     
     def nom_ligne(self, indice) :
         return self.liste_lignes[indice]
-    # reseau -> int -> string
+    # Reseau -> int -> str
+    
+    def ligne_arrets(self, indice) :
+        return Reseau.liste_lignes[indice][1]
+    # Reseau -> int -> int list
+    
+    def ligne_terminus(self, indice) :
+        return Reseau.liste_lignes[indice][2]
+    # Reseau -> int -> int list
     
     def afficher_ligne(self, indice) :
-        result = []
-        for i in range(len(self.ligne_arrets(indice))) :
-             result.append(self.nom_arret(self.ligne_arrets(indice)[i]))
+        result = self.ligne_arrets(indice)[0]
+        for indice_arret in self.ligne_arrets(indice)[1:] :
+             result += " -> " + self.nom_arret(indice_arret)
         return result
-    # reseau -> string -> list of string
+    # Reseau -> int -> str
+    
+    def changer_temps(self, indice_arret_init, indice_arret_final, temps) :
+        self.matrice_segments[indice_arret_init][indice_arret_final] = temps
+    # Reseau -> int -> int -> int -> unit
     
     def correspondance(self, indice_arret, indice_ligne):
         lignes = []
@@ -89,24 +99,28 @@ class reseau :
                 if indice_arret in self.liste_lignes[i] :
                     lignes.append(k)
         return lignes
-    # reseau -> string -> int -> list of int
+    # Reseau -> str -> int -> list of int
     
     def troncons(self, indice_ligne) :
         liste_troncons = []
-        for indice_terminus in self.liste_terminus(indice_ligne) :
-            troncon = []
-            compteur = 0
-            indice_arret = self.liste_arrets(indice_ligne)[compteur]
-            while indice_arret != indice_terminus :
+        indice_arret = self.ligne_terminus(indice_ligne)[0]
+        compteur = self.ligne_arrets(indice_ligne).index(indice_arret)
+        for indice_terminus in self.ligne_terminus(indice_ligne) :
+            troncon = [indice_arret]
+            compteur += 1
+            if compteur = len(self.ligne_arrets(indice_ligne)) :
+                compteur = 0
+            indice_arret = self.ligne_arrets(indice_ligne)[compteur]
+            while indice_arret not in self.ligne_terminus(indice_ligne) :
                 troncon.append(indice_arret)
                 compteur += 1
-            while self.liste_arrets(indice_ligne)[indice_arret] != self.liste_terminus(indice_ligne)[(indice_terminus + 1) % len(self.liste_terminus(indice_ligne))] :
-                indice_arret += 1
-                troncon.append(self.liste_arrets(indice_ligne)[indice_arret])
-            troncon.append(self.liste_arrets(indice_ligne)[indice_arret + 1])
+                if compteur = len(self.ligne_arrets(indice_ligne)) :
+                    compteur = 0
+                indice_arret = self.ligne_arrets(indice_ligne)[compteur]
+            troncon.append(indice_arret)
             liste_troncons.append(troncon)
         return liste_troncons
-    # reseau -> int -> list of list of string
+    # Reseau -> int -> list of list of int
     
     def duree(self, indice_ligne, arret_init, arret_final) :
         troncons_valides = []
@@ -130,4 +144,4 @@ class reseau :
         except ValueError :
             print("Je ne peux pas calculer la durée pour l'instant")
             return -1
-    # reseau -> int -> string -> string -> float
+    # Reseau -> int -> str -> str -> int
