@@ -65,7 +65,7 @@ class Frequences :
             if self.freq_ligne(indice_ligne)[tranche][0] <= depart and depart <= self.freq_ligne(indice_ligne)[tranche][1] :
                 depart += self.freq_ligne(indice_ligne)[tranche][2]
                 intervalle = (self.freq_ligne(indice_ligne)[tranche][2] // 10) + 1
-                result.append([depart, intervale])
+                result.append([depart, intervalle])
             else :
                 tranche += 1
         return result
