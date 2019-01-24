@@ -108,13 +108,13 @@ class Reseau :
         for indice_terminus in self.ligne_terminus(indice_ligne) :
             troncon = [indice_arret]
             compteur += 1
-            if compteur = len(self.ligne_arrets(indice_ligne)) :
+            if compteur == len(self.ligne_arrets(indice_ligne)) :
                 compteur = 0
             indice_arret = self.ligne_arrets(indice_ligne)[compteur]
             while indice_arret not in self.ligne_terminus(indice_ligne) :
                 troncon.append(indice_arret)
                 compteur += 1
-                if compteur = len(self.ligne_arrets(indice_ligne)) :
+                if compteur == len(self.ligne_arrets(indice_ligne)) :
                     compteur = 0
                 indice_arret = self.ligne_arrets(indice_ligne)[compteur]
             troncon.append(indice_arret)
