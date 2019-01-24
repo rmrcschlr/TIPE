@@ -1,4 +1,4 @@
-def inclus(liste1, liste2) :
+ddef inclus(liste1, liste2) :
     if liste1 == [] or len(liste1) > len(liste2) :
         return False
     liste2_bis = liste2.copy()  
@@ -40,7 +40,7 @@ class Reseau :
     # Reseau -> int -> str
     
     def ligne_correcte(self, ligne) :
-        return inclus(ligne[1], self.liste_arrets) and inclus(ligne[2], ligne[1])
+        return max(ligne[1]) and inclus(ligne[2], ligne[1])
     # Reseau -> [str, list of int, list of int] -> bool
 
     def ajouter_ligne(self, nom, arrets, terminus) :
@@ -53,7 +53,6 @@ class Reseau :
             liste_indices_terminus.append(self.indice_arret(arret))
         ligne = [nom, liste_indices_arrets, liste_indices_terminus]
         if self.ligne_correcte(ligne) :
-            #arranger_terminus(ligne)
             self.liste_lignes.append(ligne)
         else :
             print("La ligne n'est pas correcte")
