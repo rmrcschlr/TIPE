@@ -1,4 +1,4 @@
-ddef inclus(liste1, liste2) :
+def inclus(liste1, liste2) :
     if liste1 == [] or len(liste1) > len(liste2) :
         return False
     liste2_bis = liste2.copy()  
@@ -68,7 +68,7 @@ class Reseau :
     # Reseau -> str -> int
     
     def nom_ligne(self, indice) :
-        return self.liste_lignes[indice]
+        return self.liste_lignes[indice][0]
     # Reseau -> int -> str
     
     def ligne_arrets(self, indice) :
@@ -76,7 +76,7 @@ class Reseau :
     # Reseau -> int -> int list
     
     def ligne_terminus(self, indice) :
-        return Reseau.liste_lignes[indice][2]
+        return self.liste_lignes[indice][2]
     # Reseau -> int -> int list
     
     def afficher_ligne(self, indice) :
