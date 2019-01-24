@@ -1,0 +1,32 @@
+def voisin(M,t,d):
+    L=[]
+    for i in range(len(M)):
+        if M[t][i]!=-1 and not(i in d):
+            L.append([i,M[t][i]])
+    return L
+    
+def sans_0(p):
+    b=[]
+    for i in range(len(p)):
+        if p[i]!=0:
+            b.append(p[i])
+    return b
+
+def dijkstra(M,d,a):
+    l=[ 0 for i in range(len(M))]
+    deja_vu=[d]
+    while d!=a:
+        print(d)
+        for i in voisin(M,d,deja_vu):
+            if l[i[0]]>0:
+                l[i[0]] = min(i[1]+l[d],l[i[0]])
+            else:
+                l[i[0]] =i[1]+l[d]
+        l[d]=0
+        deja_vu.append(d)
+        d=l.index(min(sans_0(l)))
+    return l[a]
+    
+#matrice de wikipedia
+    
+matrice=[[-1,85,217,-1,173,-1,-1,-1,-1,-1],[85,-1,-1,-1,-1,80,-1,-1,-1,-1],[217,-1,-1,-1,-1,-1,186,103,-1,-1],[-1,-1,-1,-1,-1,-1,-1,103,-1,-1],[173,-1,-1,-1,-1,-1,-1,-1,-1,502],[-1,80,-1,-1,-1,-1,-1,-1,250,-1],[-1,-1,186,-1,-1,-1,-1,-1,-1,-1],[-1,-1,103,183,-1,-1,-1,-1,-1,167],[-1,-1,-1,-1,-1,250,-1,-1,-1,84],[-1,-1,-1,-1,502,-1,-1,167,84,-1]]
