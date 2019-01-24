@@ -55,18 +55,15 @@ class Frequences :
                     self.liste[i][j + 1][1], self.liste[i][j + 2][0] = moyenne, moyenne + 1
     # Frequences -> unit
     
-    def departs(self, indice_ligne) :
+    def prochain_depart(self, indice_ligne, depart_precedent) :
         self.normaliser()
         tranche = 0
-        depart = self.freq_ligne(indice_ligne)[0][0]
-        intervalle = (self.freq_ligne(indice_ligne)[0][2] // 10) + 1
-        result = [[depart, intervalle]]
-        while tranche < len(self.freq_ligne(indice_ligne)) :
-            if self.freq_ligne(indice_ligne)[tranche][0] <= depart and depart <= self.freq_ligne(indice_ligne)[tranche][1] :
-                depart += self.freq_ligne(indice_ligne)[tranche][2]
-                intervalle = (self.freq_ligne(indice_ligne)[tranche][2] // 10) + 1
-                result.append([depart, intervalle])
-            else :
-                tranche += 1
-        return result
-    # Frequences -> int -> list of [int, int]
+        while tranche < len(self.freq_ligne(indice_ligne)) and (self.freq_ligne(indice_ligne)[tranche][0] > depart_precedent or depart_precedent > self.freq_ligne(indice_ligne)[tranche][1]) :
+            tranche += 1
+        ecart = self.freq_ligne(indice_ligne)[tranche][2]
+        if depart_precedent + ecart > self.freq_ligne(indice_ligne)[-1][1] :
+            return [-1, -1]
+        intervalle = (self.freq_ligne(indice_ligne)[tranche][2] // 10) + 1
+        return [ecart, intervalle]
+    # Frequences -> int -> int -> [int, int]
+
