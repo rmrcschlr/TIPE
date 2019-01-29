@@ -99,7 +99,6 @@ FREQUENCES.ajouter_frequence(2, 0, 59, 5)
 
 Problem = CSP()
 
-#faire d'abord sans critere si ca marche, puis faire une boucle while sur le critere
 for indice_ligne in range(len(RESEAU.liste_lignes)) :
     for terminus in RESEAU.ligne_terminus(indice_ligne) :
         compteur = 0
@@ -115,6 +114,22 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
             maximum = max(domaine + suivant[0]) + suivant[1]
             domaine = arange(minimum, maximum + 1)
             Problem.ajoute_variable(RESEAU.nom_ligne(indice_ligne) + "," + RESEAU.nom_arret(terminus) + ',' + str(compteur), domaine)
+            Problem.ajoute_contrainte(lambda a, b, ecart = suivant[0], intervalle = suivant[1] : abs(b - ecart - a) <= intervalle, (RESEAU.nom_ligne(indice_ligne) + "," + RESEAU.nom_arret(terminus) + ',' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + "," + RESEAU.nom_arret(terminus) + ',' + str(compteur)))
             compteur +=1
             suivant = FREQUENCES.prochain_depart(indice_ligne, depart)
         
+Solution_sans_critere = solution_par_anticipation(Problem)
+
+#rajouter les contraintes pour un critere
+
+if Solution[0] :
+    result = []
+    for indice_ligne in range(len(RESEAU.liste_lignes)) :
+        result.append([RESEAU.nom_ligne(indice_ligne)])
+        for terminus in RESEAU.ligne_terminus(indice_ligne) :
+            result[-1].append([RESEAU.nom_arret(terminus)])
+            compteur = 0
+            while RESEAU.nom_ligne(indice_ligne) + "," + RESEAU.nom_arret(terminus) + ',' + str(compteur) in Solution[1] :
+                result[-1][-1].append(Solution[1][RESEAU.nom_ligne(indice_ligne) + "," + RESEAU.nom_arret(terminus) + ',' + str(compteur)])
+                compteur += 1
+print(result)
