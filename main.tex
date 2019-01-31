@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+
+\title{Optimisation des grilles horaires d'un réseau de transport en commun}
+\author{Hascoet Tristan, JOURDIN Yann et SICHLER Romaric }
+\date{Décembre 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Positionnements thématiques}
+
+Informatique Pratique et Théorique, Mathématiques de l'optimisation
+
+\section{Mots-clés}
+
+\begin{itemize}
+    \item
+    Réseau - \textit{Network}
+    \item
+    Transport public - \textit{Public transportation}
+    \item
+    Grille horaire - \textit{Timetable}
+    \item 
+    Optimisation - \textit{Optimisation}
+    \item
+    Programmation par contraintes - \textit{Constraint programming}
+\end{itemize}
+
+\section{Bibliographie commentée}
+
+Dans le domaine de l'optimisation des réseaux de transports publics, il y a d'abord la phase de création du service de transport. Ceder et Wilson proposent, en 1986, 5 phases [1]. La première est la conception du réseau, la deuxième est la mise au point des fréquences de courses en fonction de l'offre et de la demande, la troisième est le développement des horaires aux arrêts, la quatrième, "le graphicage", est l'organisation des véhicules, et la cinquième, "l'habillage", est la planification des conducteurs.
+\newline
+L'optimisation d'un réseau de transport passe par l'optimisation de chacune de ses phases. Cependant, les problèmes étant complexes, notamment dû aux nombreuses contraintes, ils sont souvent résolus à l'aide d'heuristiques, dont la programmation par contrainte [2] ou la recherche tabou [3] qui est une métaheuristique. Néanmoins, certaines de ces phases peuvent être traitées simultanément [2][3][4], notamment la création des horaires et du graphicage [2][3].
+\newline
+L'optimisation des grilles horaires peut viser une synchronisation parfaite des correspondances [5] ou alors un temps d'attente aux arrêts minimal pour l'utilisateur et la régularité des départs de bus aux terminus [3].
+
+\section{Problématique retenue}
+
+Comment optimiser les grilles horaires d'un réseau de transport en commun en utilisant la programmation par contraintes ?
+
+\section{Objectifs du TIPE}
+
+\begin{itemize}
+    \item Création d'un algorithme qui résout un problème de satisfaction de con-traintes
+    \item Création d'un algorithme qui modélise un réseau de transport en commun
+    \item Création d'un algorithme qui renvoie les grilles horaires à partir des fréquences en utilisant la programmation par contraintes dans le but de réduire le temps d'attente des utilisateurs aux arrêts.
+    \item Création d'un algorithme qui renvoie les grilles horaires optimisées à partie des précédentes grilles horaires dans le but de réduire le temps de trajet moyen dans le réseau.
+    \item Application des algorithmes sur un réseau réel.
+    \item Comparaison des résultats des algorithmes par rapport au réseau réel.
+\end{itemize}
+
+\begin{thebibliography}{9}
+    \bibitem{ceder1}
+    "Bus network design", un article de Avishai Ceder et Nige H.M. Wilson dans le journal \textit{Transportation Research Part B: Methodological, Volume 20, Issue 4, August 1986}.
+    \bibitem{lobianco}
+    \textit{Création simultanée des tables horaires et du graphicage sur une ligne de bus}, travail visant le prix Jeune Chercheur Roadef2017 de Giovanni Lo Bianco, Xavier Lorca et Benoît Rottembourg.
+    \bibitem{guihaire}
+    \textit{Modélisation et Optimisation pour le Graphicage des Lignes de Bus}, une thèse de Valérie Guihaire.
+    \bibitem{hao}
+    \textit{Transit Network Design And Scheduling : a Global Review}, une revue scientifique de Valérie Guihaire et Jin-Kao Hao.
+    \bibitem{ceder2}
+    "Creating bus timetables with maximal synchronization", un article de Avishai Ceder, Boaz Golany et Ofer Tal dans le journal \textit{Transportation Research Part A: Policy and Practice, Volume 35, Issue 10, December 2001}
+\end{thebibliography}
+
+\end{document}
