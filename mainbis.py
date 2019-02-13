@@ -7,7 +7,7 @@ def map(fonction, liste) :
     return result
 
 ### Réseau avec 2 lignes et 1 correspondance
-"""
+
 liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'C']
 
 matrice = []
@@ -65,7 +65,7 @@ FREQUENCES.ajouter_frequence(2, 0, 29, 5)
 FREQUENCES.ajouter_frequence(0, 30, 59, 7)
 FREQUENCES.ajouter_frequence(1, 30, 59, 11)
 FREQUENCES.ajouter_frequence(2, 30, 59, 13)
-"""
+
 ### Réseau avec 3 lignes et 3 correspondances
 
 liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C1,2', 'C1,3', 'C2,3']
