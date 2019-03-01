@@ -30,6 +30,35 @@ FREQUENCES.ajouter_frequence(1, 0, 29, 3)
 FREQUENCES.ajouter_frequence(0, 30, 59, 5)
 FREQUENCES.ajouter_frequence(1, 30, 59, 7)
 
+### Réseau avec 3 lignes et 1 correspondance
+
+liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C']
+
+matrice = []
+for i in range(6) :
+    matrice.append((i * [-1]) + [0] + ((5 - i) * [-1]))
+matrice[0].append(1)
+matrice[1].append(2)
+matrice[2].append(3)
+matrice[3].append(4)
+matrice[4].append(5)
+matrice[5].append(6)
+matrice.append([1, 2, 3, 4, 5, 6])
+
+RESEAU = Reseau(liste, matrice)
+
+RESEAU.ajouter_ligne('L1', ['T1,0', 'C', 'T1,1', 'C'], ['T1,0', 'T1,1'])
+RESEAU.ajouter_ligne('L2', ['T2,0', 'C', 'T2,1', 'C'], ['T2,0', 'T2,1'])
+RESEAU.ajouter_ligne('L3', ['T3,0', 'C', 'T3,1', 'C'], ['T3,0', 'T3,1'])
+
+FREQUENCES = Frequences(RESEAU)
+FREQUENCES.ajouter_frequence(0, 0, 29, 2)
+FREQUENCES.ajouter_frequence(1, 0, 29, 3)
+FREQUENCES.ajouter_frequence(2, 0, 29, 5)
+FREQUENCES.ajouter_frequence(0, 30, 59, 7)
+FREQUENCES.ajouter_frequence(1, 30, 59, 11)
+FREQUENCES.ajouter_frequence(2, 30, 59, 13)
+
 ### Réseau avec 3 lignes et 2 correspondances
 
 liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C1,2', 'C1,3']
