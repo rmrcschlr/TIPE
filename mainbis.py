@@ -142,6 +142,7 @@ FREQUENCES.ajouter_frequence(2, 30, 59, 13)
 Probleme_initial = CSP()
 
 ###Rentre les variables et leur domaine dans le CSP
+
 variables_triees = []
 for indice_ligne in range(len(RESEAU.liste_lignes)) :
     variables_triees.append([])
@@ -170,23 +171,27 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
 
 #raise RuntimeError("Pause")
 ### Résout le CSP sans critere
+
 Solution = solution_par_anticipation(Probleme_initial)
 
 if Solution[0] :
     result = []
     for indice_ligne in range(len(RESEAU.liste_lignes)) :
-        result.append([RESEAU.nom_ligne(indice_ligne)])
+        ligne = []
         for terminus in RESEAU.ligne_terminus(indice_ligne) :
-            result[-1].append([RESEAU.nom_arret(terminus)])
+            arret = []
             compteur = 0
             while RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur) in Solution[1] :
-                result[-1][-1].append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
+                arret.append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
                 compteur += 1
+            ligne.append(array(arret))
+        result.append(ligne)
     print(result)
 else :
     raise RuntimeError("Y'a un probleme")
 
 ### Résout le CSP avec critere
+
 noms_initial = []
 domaines_initial = []
 for i in range(len(Probleme_initial.liste)) :
@@ -239,14 +244,17 @@ while not(solution_trouvee) and critere < critere_max :
     solution_trouvee = Solution[0]
 
 ### Affiche la solution dans une liste
+
 if Solution[0] :
     result = []
     for indice_ligne in range(len(RESEAU.liste_lignes)) :
-        result.append([RESEAU.nom_ligne(indice_ligne)])
+        ligne = []
         for terminus in RESEAU.ligne_terminus(indice_ligne) :
-            result[-1].append([RESEAU.nom_arret(terminus)])
+            arret = []
             compteur = 0
             while RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur) in Solution[1] :
-                result[-1][-1].append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
+                arret.append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
                 compteur += 1
+            ligne.append(array(arret))
+        result.append(ligne)
 print(result)
