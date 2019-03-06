@@ -25,26 +25,31 @@ def sans_0(K):
 # list of float -> list of float
 
 def Dijkstra_adapte(matrice, horaires, arret_init, arret_final, heure_depart) :
-    liste = len(M) * [[heure_depart, []]]
-    liste[arret_init][1]=[arret_init]
+    liste = [ [0,[]] for i in range(len(matrice)) ]
+    liste[arret_init][0] = heure_depart
+    liste[arret_init][1] = [arret_init]
     arrets_interdits = []
     arret_actuel = arret_init
     while arret_actuel != arret_final :
         arrets_interdits.append(arret_actuel)
         liste_voisins = voisin(matrice, arret_actuel, arrets_interdits)
-        for arret_voisin in listes_voisins :
-            if liste[arret_voisin][0] == heure_depart :
-                liste[arret_voisin][0] = liste[arret_actuel][0] + matrice[arret_actuel][arret_voisin]
+        horaires_arret_actuel = horaires.horaire_suivant(arret_actuel, liste[arret_actuel][0])
+        for arret_voisin in liste_voisins :
+            indice = 0
+            while horaires_arret_actuel[indice][0] != arret_voisin :
+                indice += 1
+            horaire_vers_voisin = horaires_arret_actuel[indice][1]
+            if liste[arret_voisin][0] == 0 :
+                liste[arret_voisin][0] = horaire_vers_voisin + matrice[arret_actuel][arret_voisin]
                 liste[arret_voisin][1] = liste[arret_actuel][1][:]
             else:
-                if liste[arret_actuel][0] + matrice[arret_actuel][arret_voisin] < liste[arret_voisin][0]:
+                if horaire_vers_voisin + matrice[arret_actuel][arret_voisin] < liste[arret_voisin][0]:
                     liste[arret_voisin][1] = liste[arret_actuel][1][:]
-                liste[arret_voisin][0] = min(liste[d][0] + matrice[arret_actuel][arret_voisin], liste[i][0])
-        arrets_interdits.append(arret_actuel)
+                liste[arret_voisin][0] = min(horaire_vers_voisin + matrice[arret_actuel][arret_voisin], liste[arret_voisin][0])
         liste[arret_actuel][0] = 0
-        x = colonne(liste,0).index(min(sans_0(colonne(liste,0))))
-        liste[x][1] += [x]
-        arret_actuel = x
-    return l[a]
+        arret_plus_proche = colonne(liste,0).index(min(sans_0(colonne(liste, 0))))
+        liste[arret_plus_proche][1] += [arret_plus_proche]
+        arret_actuel = arret_plus_proche
+    return liste[arret_final]
     
 # list of list of float -> int -> int -> float*list of int
