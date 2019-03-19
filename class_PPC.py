@@ -1,5 +1,21 @@
 from numpy import *
 
+def colonne(mat,c):
+    L=[]
+    for i in range(len(mat)):
+        L.append(mat[i][c])
+    return L
+
+def aplatir(liste) :
+    liste_aplatie = []
+    for element1 in liste :
+        if type(element1) == list :
+            for element2 in element1 :
+                liste_aplatie.append(element2)
+        else :
+            liste_aplatie.append(element1)
+    return liste_aplatie
+
 def inclus(liste1, liste2) :
     if liste1 == [] or len(liste1) > len(liste2) :
         return False
@@ -13,22 +29,6 @@ def inclus(liste1, liste2) :
         i += 1
     return result
 
-def map(fonction, liste) :
-    result = []
-    for element in liste :
-        result.append(fonction(element))
-    return result
-
-def aplatir(liste) :
-    liste_aplatie = []
-    for element1 in liste :
-        if type(element1) == list :
-            for element2 in element1 :
-                liste_aplatie.append(element2)
-        else :
-            liste_aplatie.append(element1)
-    return liste_aplatie
-
 def sans(liste, valeur) :
     result = []
     for element in liste :
@@ -41,6 +41,12 @@ def prive(liste1, liste2) :
     for element in liste1 :
         if element not in liste2 :
             result.append(element)
+    return result
+
+def map(fonction, liste) :
+    result = []
+    for element in liste :
+        result.append(fonction(element))
     return result
 
 def array_in(array, list) :
@@ -230,8 +236,6 @@ def anticipation(csp, affectation) :
     affectation_temporaire = affectation.copy()
     i = len(affectation)
     variable_i = csp.liste[i]
-    domaine_i_initial = variable_i[1].copy()
-    variable_i[1] = domaine_restreint(csp, affectation, variable_i)
     variable_i[1] = domaine_trie(csp, affectation, variable_i)
     for valeur_i in variable_i[1] :
         affectation_temporaire[variable_i[0]] = valeur_i
@@ -259,7 +263,6 @@ def anticipation(csp, affectation) :
             for compteur in range(len(liste_domaines_temporaires)) :
                 j = liste_prochaines_variables[compteur]
                 csp.liste[j][1] = liste_domaines_initiaux[compteur]
-    variable_i[1] = domaine_i_initial
     return (False, affectation)
 # CSP -> int dict -> (bool, int dict)
 
