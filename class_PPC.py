@@ -17,12 +17,14 @@ def aplatir(liste) :
     return liste_aplatie
 
 def inclus(liste1, liste2) :
-    if liste1 == [] or len(liste1) > len(liste2) :
+    longueur1 = len(liste1)
+    longueur2 = len(liste2)
+    if liste1 == [] or longueur1 > longueur2 :
         return False
     liste2_bis = liste2.copy()  
     result = True
     i = 0
-    while result and i < len(liste1) :
+    while result and i < longueur1 :
         result = liste1[i] in liste2_bis
         if result :
             liste2_bis.remove(liste1[i])
@@ -59,10 +61,10 @@ def array_in(array, list) :
 
 class CSP :
     
-    def __init__(self, noms = [], domaine = [], liste_contraintes = [], liste_couts = []) :
+    def __init__(self, noms = [], domaines = [], liste_contraintes = [], liste_couts = []) :
         self.liste = []
-        if domaine != [] :
-            self.ajoute_variables(noms, domaine)
+        if domaines != [] :
+            self.ajoute_variables(noms, domaines)
         self.contraintes = []
         for contrainte in liste_contraintes :
             self.ajoute_contrainte(contrainte[0], contrainte[1])
@@ -102,6 +104,18 @@ class CSP :
                 print("Les domaines ne sont soit pas du bon type, soit leur nombre est different de celui des noms")
     # CSP -> string list -> int array list -> unit
     
+    def domaine_variable(self, nom) :
+        compteur = 0
+        condition = True
+        while condition and compteur < len(self.liste) :
+            if self.liste[compteur][0] == nom :
+                result = self.liste[compteur][1]
+                condition = False
+            compteur += 1
+        if condition :
+            result = array([])
+        return result
+    
     def ajoute_contrainte(self, contrainte, noms) :
         self.contraintes.append([contrainte, noms])
     # CSP -> fun( ints -> bool ) -> str list -> unit
@@ -138,6 +152,34 @@ class CSP :
                 result.append(i)
         return result
     # CSP -> string -> int list
+    
+    def trie_statique(self) :
+        liste = []
+        for i in range(len(self.liste)) :
+            liste.append([len(self.liste[i][1])] + self.liste[i])
+        liste.sort()
+        temp = array(liste, dtype=object)
+        self.liste = list(temp[:, 1:3])
+    
+    def copie(self) :
+        noms_nouveaux = []
+        domaines_nouveaux = []
+        contraintes_nouveaux = []
+        couts_nouveaux = []
+        for i in range(len(self.liste)) :
+            noms_nouveaux.append(self.liste[i][0])
+            domaines_nouveaux.append(copy(self.liste[i][1]))
+        for i in range(len(self.contraintes)) :
+            temp = []
+            for j in range(len(self.contraintes[i][1])) :
+                temp.append(self.contraintes[i][1][j])
+            contraintes_nouveaux.append([self.contraintes[i][0], temp])
+        for i in range(len(self.couts)) :
+            temp = []
+            for j in range(len(self.couts[i][1])) :
+                temp.append(self.couts[i][1][j])
+            couts_nouveaux.append([self.couts[i][0], temp])
+        return CSP(noms_nouveaux, domaines_nouveaux, contraintes_nouveaux, couts_nouveaux)
 
 def cout_affectation(csp, affectation) :
     cout_total = 0
@@ -182,8 +224,8 @@ def cout_suivant(csp, affectation, cout_initial, variable, valeur) :
 
 def domaine_trie(csp, affectation, variable) :
     liste = []
+    cout_initial = cout_affectation(csp, affectation)
     for i in variable[1] :
-        cout_initial = cout_affectation(csp, affectation)
         liste.append([cout_suivant(csp, affectation, cout_initial, variable, i), i])
     liste.sort()
     temp = array(liste)
@@ -223,7 +265,7 @@ def domaine_restreint(csp, affectation, variable) :
         if affectation_consistante(csp, affectation_temp) :
             result.append(i)
     return array(result)
-# CSP -> int dict -> [str, int array]
+# CSP -> int dict -> int array
 
 def anticipation(csp, affectation) :
     condition = True
@@ -235,6 +277,7 @@ def anticipation(csp, affectation) :
         return (True, affectation)
     affectation_temporaire = affectation.copy()
     i = len(affectation)
+    print(i)
     variable_i = csp.liste[i]
     variable_i[1] = domaine_trie(csp, affectation, variable_i)
     for valeur_i in variable_i[1] :
@@ -267,6 +310,7 @@ def anticipation(csp, affectation) :
 # CSP -> int dict -> (bool, int dict)
 
 def solution_par_anticipation(csp) :
+    csp.trie_statique()
     affectation = {}
     return anticipation(csp, affectation)
 # CSP -> (bool, int dict)
