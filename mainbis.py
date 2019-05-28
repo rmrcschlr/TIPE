@@ -6,8 +6,26 @@ def map(fonction, liste) :
         result.append(fonction(element))
     return result
 
-### Réseau avec 2 lignes et 1 correspondance
+def sans(liste, valeur) :
+    result = []
+    for element in liste :
+        if element != valeur :
+            result.append(element)
+    return result
 
+def element_dans_intervalle(liste, borne_inf, borne_sup) :
+    assert liste != []
+    longueur = len(liste)
+    result = False
+    indice = 0
+    while (not result) and (indice < longueur) :
+        result = result or (borne_inf <= liste[indice] <= borne_sup)
+        indice += 1
+    return result
+    
+
+### Réseau avec 2 lignes et 1 correspondance
+"""
 liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'C']
 
 matrice = []
@@ -94,7 +112,7 @@ FREQUENCES.ajouter_frequence(2, 0, 29, 5)
 FREQUENCES.ajouter_frequence(0, 30, 59, 7)
 FREQUENCES.ajouter_frequence(1, 30, 59, 11)
 FREQUENCES.ajouter_frequence(2, 30, 59, 13)
-
+"""
 ### Réseau avec 3 lignes et 3 correspondances
 
 liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C1,2', 'C1,3', 'C2,3']
@@ -132,6 +150,14 @@ RESEAU.ajouter_ligne('L2', ['T2,0', 'C1,2', 'C2,3', 'T2,1', 'C2,3', 'C1,2'], ['T
 RESEAU.ajouter_ligne('L3', ['T3,0', 'C1,3', 'C2,3', 'T3,1', 'C2,3', 'C1,3'], ['T3,0', 'T3,1'])
 
 FREQUENCES = Frequences(RESEAU)
+"""
+FREQUENCES.ajouter_frequence(0, 0, 29, 20)
+FREQUENCES.ajouter_frequence(1, 0, 29, 20)
+FREQUENCES.ajouter_frequence(2, 0, 29, 20)
+FREQUENCES.ajouter_frequence(0, 30, 59, 10)
+FREQUENCES.ajouter_frequence(1, 30, 59, 10)
+FREQUENCES.ajouter_frequence(2, 30, 59, 10)
+"""
 FREQUENCES.ajouter_frequence(0, 0, 29, 2)
 FREQUENCES.ajouter_frequence(1, 0, 29, 3)
 FREQUENCES.ajouter_frequence(2, 0, 29, 5)
@@ -172,47 +198,21 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
             suivant = FREQUENCES.prochain_depart(indice_ligne, depart)
 
 #raise RuntimeError("Pause")
-### Résout le CSP sans critere
-
-Solution = solution_par_anticipation(Probleme_initial)
-
-if Solution[0] :
-    result = []
-    for indice_ligne in range(len(RESEAU.liste_lignes)) :
-        ligne = []
-        for terminus in RESEAU.ligne_terminus(indice_ligne) :
-            arret = []
-            compteur = 0
-            while RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur) in Solution[1] :
-                arret.append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
-                compteur += 1
-            ligne.append(array(arret))
-        result.append(ligne)
-    print(result)
-else :
-    raise RuntimeError("Y'a un probleme")
 
 ### Résout le CSP avec critere
-
-noms_initial = []
-domaines_initial = []
-for i in range(len(Probleme_initial.liste)) :
-    noms_initial.append(Probleme_initial.liste[i][0])
-    domaines_initial.append(Probleme_initial.liste[i][1])
 
 ecart_max = 0
 for indice_ligne in range(len(FREQUENCES.liste)) :
     for freq in range(len(FREQUENCES.freq_ligne(indice_ligne))) :
         if FREQUENCES.freq_ligne(indice_ligne)[freq][2] > ecart_max :
             ecart_max = FREQUENCES.freq_ligne(indice_ligne)[freq][2]
-critere_max = (ecart_max // 2) + 1
+critere = ecart_max + 1
 
 solution_trouvee = True
-critere = critere_max + 1
-while solution_trouvee and critere > 0 :#critere_max
+while solution_trouvee and critere > 0 :
     critere -= 1
     print(critere)
-    Probleme_complet = CSP(noms_initial, domaines_initial, Probleme_initial.contraintes.copy(), Probleme_initial.couts.copy())
+    Probleme_complet = Probleme_initial.copie()
     for indice_arret in range(len(RESEAU.liste_arrets)) :
         liste_variables_arret = []
         for indice_ligne in RESEAU.correspondance(indice_arret) :
@@ -220,30 +220,20 @@ while solution_trouvee and critere > 0 :#critere_max
         for compteur_ligne in range(len(liste_variables_arret)) :
             for compteur_terminus in range(len(liste_variables_arret[compteur_ligne])) :
                 tranche_variables = liste_variables_arret[compteur_ligne][compteur_terminus]
-                indice_variable = 0
-                temps1 = RESEAU.duree(RESEAU.indice_ligne(tranche_variables[indice_variable].split(';')[0]), RESEAU.indice_arret(tranche_variables[indice_variable].split(';')[1]), indice_arret)
-                for indice_ligne in RESEAU.correspondance(indice_arret) :
-                    if tranche_variables[indice_variable].split(';')[0] != RESEAU.nom_ligne(indice_ligne) :
-                        for indice_terminus in RESEAU.ligne_terminus(indice_ligne) :
-                            temps2 = RESEAU.duree(indice_ligne, indice_terminus, indice_arret)
-                            if temps2 != -1 :
-                                Probleme_complet.ajoute_contrainte(lambda a, b, l, critere = critere, temps1 = temps1, temps2 = temps2 : (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) <= critere) or (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) >= (b - a)) or (max(l) + temps2 < a + temps1) or (min(l) + temps2 > a + temps1), [tranche_variables[indice_variable], tranche_variables[indice_variable + 1]] + [variables_triees[indice_ligne][RESEAU.ligne_terminus(indice_ligne).index(indice_terminus)]])
-                for indice_variable in range(1, len(tranche_variables) - 1) :
+                for indice_variable in range(len(tranche_variables) - 1) :
                     temps1 = RESEAU.duree(RESEAU.indice_ligne(tranche_variables[indice_variable].split(';')[0]), RESEAU.indice_arret(tranche_variables[indice_variable].split(';')[1]), indice_arret)
-                    for indice_ligne in RESEAU.correspondance(indice_arret) :
-                        if tranche_variables[indice_variable].split(';')[0] != RESEAU.nom_ligne(indice_ligne) :
-                            for indice_terminus in RESEAU.ligne_terminus(indice_ligne) :
-                                temps2 = RESEAU.duree(indice_ligne, indice_terminus, indice_arret)
-                                if temps2 != -1 :
-                                    Probleme_complet.ajoute_contrainte(lambda a, b, c, l, critere = critere, temps1 = temps1, temps2 = temps2 : (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) <= critere) or (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) >= min(c - a, a - b)) or (max(l) + temps2 < a + temps1) or (min(l) + temps2 > a + temps1), [tranche_variables[indice_variable], tranche_variables[indice_variable - 1], tranche_variables[indice_variable + 1]] + [variables_triees[indice_ligne][RESEAU.ligne_terminus(indice_ligne).index(indice_terminus)]])
-                indice_variable = len(tranche_variables) - 1
-                temps1 = RESEAU.duree(RESEAU.indice_ligne(tranche_variables[indice_variable].split(';')[0]), RESEAU.indice_arret(tranche_variables[indice_variable].split(';')[1]), indice_arret)
-                for indice_ligne in RESEAU.correspondance(indice_arret) :
-                    if tranche_variables[indice_variable].split(';')[0] != RESEAU.nom_ligne(indice_ligne) :
+                    for indice_ligne in sans(RESEAU.correspondance(indice_arret), RESEAU.indice_ligne(tranche_variables[0].split(';')[0])) :
                         for indice_terminus in RESEAU.ligne_terminus(indice_ligne) :
                             temps2 = RESEAU.duree(indice_ligne, indice_terminus, indice_arret)
                             if temps2 != -1 :
-                                Probleme_complet.ajoute_contrainte(lambda a, b, l, critere = critere, temps1 = temps1, temps2 = temps2 : (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) <= critere) or (min(map((lambda x : abs(x + temps2 - a - temps1)), l)) >= (a - b)) or (max(l) + temps2 < a + temps1) or (min(l) + temps2 > a + temps1), [tranche_variables[indice_variable], tranche_variables[indice_variable - 1]] + [variables_triees[indice_ligne][RESEAU.ligne_terminus(indice_ligne).index(indice_terminus)]])
+                                domaine_variable_actuelle = Probleme_complet.domaine_variable(tranche_variables[indice_variable])
+                                domaine_reference = arange(domaine_variable_actuelle[0], domaine_variable_actuelle[-1] + critere + 1)
+                                variables_utiles = []
+                                for nom in variables_triees[indice_ligne][RESEAU.ligne_terminus(indice_ligne).index(indice_terminus)] :
+                                    if not(array_equal(intersect1d(domaine_reference, Probleme_complet.domaine_variable(nom)), [])) :
+                                        variables_utiles.append(nom)
+                                if variables_utiles != [] :
+                                    Probleme_complet.ajoute_contrainte(lambda a, b, l, critere = critere, temps1 = temps1, temps2 = temps2 : not(element_dans_intervalle(map((lambda x : x + temps2), l), a + temps1, b + temps1 - 1)) or element_dans_intervalle(map((lambda x : x + temps2 - a - temps1), l), 0, critere), [tranche_variables[indice_variable], tranche_variables[indice_variable + 1]] + [variables_utiles])
     Solution_potentielle = solution_par_anticipation(Probleme_complet)
     solution_trouvee = Solution_potentielle[0]
     if solution_trouvee :
@@ -261,6 +251,6 @@ if Solution[0] :
             while RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur) in Solution[1] :
                 arret.append(Solution[1][RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
                 compteur += 1
-            ligne.append(array(arret))
+            ligne.append(arret)
         result.append(ligne)
 print(result)
