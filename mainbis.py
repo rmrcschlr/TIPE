@@ -1,4 +1,5 @@
 from numpy import *
+from time import time
 
 def map(fonction, liste) :
     result = []
@@ -42,11 +43,11 @@ RESEAU = Reseau(liste, matrice)
 RESEAU.ajouter_ligne('L1', ['T1,0', 'C', 'T1,1', 'C'], ['T1,0', 'T1,1'])
 RESEAU.ajouter_ligne('L2', ['T2,0', 'C', 'T2,1', 'C'], ['T2,0', 'T2,1'])
 
-FREQUENCES = Frequences(RESEAU)
-FREQUENCES.ajouter_frequence(0, 0, 29, 2)
-FREQUENCES.ajouter_frequence(1, 0, 29, 3)
-FREQUENCES.ajouter_frequence(0, 30, 59, 5)
-FREQUENCES.ajouter_frequence(1, 30, 59, 7)
+CADENCEMENTS = Cadencements(RESEAU)
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 2)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 3)
+CADENCEMENTS.ajouter_frequence(0, 30, 59, 5)
+CADENCEMENTS.ajouter_frequence(1, 30, 59, 7)
 
 ### Réseau avec 3 lignes et 1 correspondance
 
@@ -69,13 +70,13 @@ RESEAU.ajouter_ligne('L1', ['T1,0', 'C', 'T1,1', 'C'], ['T1,0', 'T1,1'])
 RESEAU.ajouter_ligne('L2', ['T2,0', 'C', 'T2,1', 'C'], ['T2,0', 'T2,1'])
 RESEAU.ajouter_ligne('L3', ['T3,0', 'C', 'T3,1', 'C'], ['T3,0', 'T3,1'])
 
-FREQUENCES = Frequences(RESEAU)
-FREQUENCES.ajouter_frequence(0, 0, 29, 2)
-FREQUENCES.ajouter_frequence(1, 0, 29, 3)
-FREQUENCES.ajouter_frequence(2, 0, 29, 5)
-FREQUENCES.ajouter_frequence(0, 30, 59, 7)
-FREQUENCES.ajouter_frequence(1, 30, 59, 11)
-FREQUENCES.ajouter_frequence(2, 30, 59, 13)
+CADENCEMENTS = Cadencements(RESEAU)
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 2)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 3)
+CADENCEMENTS.ajouter_frequence(2, 0, 29, 5)
+CADENCEMENTS.ajouter_frequence(0, 30, 59, 7)
+CADENCEMENTS.ajouter_frequence(1, 30, 59, 11)
+CADENCEMENTS.ajouter_frequence(2, 30, 59, 13)
 
 ### Réseau avec 3 lignes et 2 correspondances
 
@@ -105,13 +106,13 @@ RESEAU.ajouter_ligne('L1', ['T1,0', 'C1,2', 'C1,3', 'T1,1', 'C1,3', 'C1,2'], ['T
 RESEAU.ajouter_ligne('L2', ['T2,0', 'C1,2', 'T2,1', 'C1,2'], ['T2,0', 'T2,1'])
 RESEAU.ajouter_ligne('L3', ['T3,0', 'C1,3', 'T3,1', 'C1,3'], ['T3,0', 'T3,1'])
 
-FREQUENCES = Frequences(RESEAU)
-FREQUENCES.ajouter_frequence(0, 0, 29, 2)
-FREQUENCES.ajouter_frequence(1, 0, 29, 3)
-FREQUENCES.ajouter_frequence(2, 0, 29, 5)
-FREQUENCES.ajouter_frequence(0, 30, 59, 7)
-FREQUENCES.ajouter_frequence(1, 30, 59, 11)
-FREQUENCES.ajouter_frequence(2, 30, 59, 13)
+CADENCEMENTS = Cadencements(RESEAU)
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 2)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 3)
+CADENCEMENTS.ajouter_frequence(2, 0, 29, 5)
+CADENCEMENTS.ajouter_frequence(0, 30, 59, 7)
+CADENCEMENTS.ajouter_frequence(1, 30, 59, 11)
+CADENCEMENTS.ajouter_frequence(2, 30, 59, 13)
 """
 ### Réseau avec 3 lignes et 3 correspondances
 
@@ -149,24 +150,24 @@ RESEAU.ajouter_ligne('L1', ['T1,0', 'C1,2', 'C1,3', 'T1,1', 'C1,3', 'C1,2'], ['T
 RESEAU.ajouter_ligne('L2', ['T2,0', 'C1,2', 'C2,3', 'T2,1', 'C2,3', 'C1,2'], ['T2,0', 'T2,1'])
 RESEAU.ajouter_ligne('L3', ['T3,0', 'C1,3', 'C2,3', 'T3,1', 'C2,3', 'C1,3'], ['T3,0', 'T3,1'])
 
-FREQUENCES = Frequences(RESEAU)
+CADENCEMENTS = Cadencements(RESEAU)
+
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 20)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 20)
+CADENCEMENTS.ajouter_frequence(2, 0, 29, 20)
+CADENCEMENTS.ajouter_frequence(0, 30, 59, 10)
+CADENCEMENTS.ajouter_frequence(1, 30, 59, 10)
+CADENCEMENTS.ajouter_frequence(2, 30, 59, 10)
 """
-FREQUENCES.ajouter_frequence(0, 0, 29, 20)
-FREQUENCES.ajouter_frequence(1, 0, 29, 20)
-FREQUENCES.ajouter_frequence(2, 0, 29, 20)
-FREQUENCES.ajouter_frequence(0, 30, 59, 10)
-FREQUENCES.ajouter_frequence(1, 30, 59, 10)
-FREQUENCES.ajouter_frequence(2, 30, 59, 10)
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 2)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 3)
+CADENCEMENTS.ajouter_frequence(2, 0, 29, 5)
+CADENCEMENTS.ajouter_frequence(0, 30, 59, 7)
+CADENCEMENTS.ajouter_frequence(1, 30, 59, 11)
+CADENCEMENTS.ajouter_frequence(2, 30, 59, 13)
 """
-FREQUENCES.ajouter_frequence(0, 0, 29, 2)
-FREQUENCES.ajouter_frequence(1, 0, 29, 3)
-FREQUENCES.ajouter_frequence(2, 0, 29, 5)
-FREQUENCES.ajouter_frequence(0, 30, 59, 7)
-FREQUENCES.ajouter_frequence(1, 30, 59, 11)
-FREQUENCES.ajouter_frequence(2, 30, 59, 13)
 
-
-
+t1 = time()
 Probleme_initial = CSP()
 
 ###Rentre les variables et leur domaine dans le CSP
@@ -177,14 +178,14 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
     for terminus in RESEAU.ligne_terminus(indice_ligne) :
         variables_triees[-1].append([])
         compteur = 0
-        depart = FREQUENCES.freq_ligne(indice_ligne)[0][0]
-        intervalle = (FREQUENCES.freq_ligne(indice_ligne)[0][2] // 10) + 1
-        domaine = arange(depart, intervalle + 1)
+        depart = CADENCEMENTS.freq_ligne(indice_ligne)[0][0]
+        intervalle = (CADENCEMENTS.freq_ligne(indice_ligne)[0][2] // 10) + 1
+        domaine = arange(depart, depart + intervalle + 1)
         Probleme_initial.ajoute_variable(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur), domaine)
         variables_triees[-1][-1].append(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur))
         Probleme_initial.ajoute_cout(lambda a : a, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
         compteur += 1
-        suivant = FREQUENCES.prochain_depart(indice_ligne, depart)
+        suivant = CADENCEMENTS.prochain_depart(indice_ligne, depart)
         while suivant != [-1, -1] :
             depart = depart + suivant[0]
             minimum = min(domaine + suivant[0]) - suivant[1]
@@ -195,17 +196,17 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
             Probleme_initial.ajoute_contrainte(lambda a, b, ecart = suivant[0], intervalle = suivant[1] : abs(b - ecart - a) <= intervalle, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
             Probleme_initial.ajoute_cout(lambda a, b, ecart = suivant[0], intervalle = suivant[1] : abs(b - ecart - a),[RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
             compteur +=1
-            suivant = FREQUENCES.prochain_depart(indice_ligne, depart)
+            suivant = CADENCEMENTS.prochain_depart(indice_ligne, depart)
 
 #raise RuntimeError("Pause")
 
 ### Résout le CSP avec critere
 
 ecart_max = 0
-for indice_ligne in range(len(FREQUENCES.liste)) :
-    for freq in range(len(FREQUENCES.freq_ligne(indice_ligne))) :
-        if FREQUENCES.freq_ligne(indice_ligne)[freq][2] > ecart_max :
-            ecart_max = FREQUENCES.freq_ligne(indice_ligne)[freq][2]
+for indice_ligne in range(len(CADENCEMENTS.liste)) :
+    for freq in range(len(CADENCEMENTS.freq_ligne(indice_ligne))) :
+        if CADENCEMENTS.freq_ligne(indice_ligne)[freq][2] > ecart_max :
+            ecart_max = CADENCEMENTS.freq_ligne(indice_ligne)[freq][2]
 critere = ecart_max + 1
 
 solution_trouvee = True
@@ -240,7 +241,7 @@ while solution_trouvee and critere > 0 :
         Solution = Solution_potentielle 
 
 ### Affiche la solution dans une liste
-
+t2 = time()
 if Solution[0] :
     result = []
     for indice_ligne in range(len(RESEAU.liste_lignes)) :
@@ -254,3 +255,4 @@ if Solution[0] :
             ligne.append(arret)
         result.append(ligne)
 print(result)
+print(t2 - t1)
