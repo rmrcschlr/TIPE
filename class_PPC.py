@@ -1,11 +1,5 @@
 from numpy import *
 
-def colonne(mat,c):
-    L=[]
-    for i in range(len(mat)):
-        L.append(mat[i][c])
-    return L
-
 def aplatir(liste) :
     liste_aplatie = []
     for element1 in liste :
@@ -71,7 +65,28 @@ class CSP :
         self.couts = []
         for cout in liste_couts :
             self.ajoute_cout(cout[0], cout[1])
-    # CSP -> string list -> int array -> [fun( ints -> bool ) ; str list] list -> [fun( ints -> float ); str list] list -> CSP
+    # CSP -> string list -> int array -> [fun( ints -> bool ) ; string list] list -> [fun( ints -> float ); string list] list -> unit
+    
+    def copie(self) :
+        noms_nouveaux = []
+        domaines_nouveaux = []
+        contraintes_nouveaux = []
+        couts_nouveaux = []
+        for i in range(len(self.liste)) :
+            noms_nouveaux.append(self.liste[i][0])
+            domaines_nouveaux.append(copy(self.liste[i][1]))
+        for i in range(len(self.contraintes)) :
+            temp = []
+            for j in range(len(self.contraintes[i][1])) :
+                temp.append(self.contraintes[i][1][j])
+            contraintes_nouveaux.append([self.contraintes[i][0], temp])
+        for i in range(len(self.couts)) :
+            temp = []
+            for j in range(len(self.couts[i][1])) :
+                temp.append(self.couts[i][1][j])
+            couts_nouveaux.append([self.couts[i][0], temp])
+        return CSP(noms_nouveaux, domaines_nouveaux, contraintes_nouveaux, couts_nouveaux)
+    # CSP -> CSP
     
     def noms(self) :
         result = []
@@ -115,10 +130,11 @@ class CSP :
         if condition :
             result = array([])
         return result
+    # CSP -> string -> int array
     
     def ajoute_contrainte(self, contrainte, noms) :
         self.contraintes.append([contrainte, noms])
-    # CSP -> fun( ints -> bool ) -> str list -> unit
+    # CSP -> fun( ints -> bool ) -> string list -> unit
     
     def contraintes_sur_variable(self, nom) :
         result = []
@@ -143,7 +159,7 @@ class CSP :
     
     def ajoute_cout(self, cout, noms) :
         self.couts.append([cout, noms])
-    # CSP -> fun( ints -> float ) -> str list -> unit
+    # CSP -> fun( ints -> float ) -> string list -> unit
     
     def couts_sur_variable(self, nom) :
         result = []
@@ -160,26 +176,7 @@ class CSP :
         liste.sort()
         temp = array(liste, dtype=object)
         self.liste = list(temp[:, 1:3])
-    
-    def copie(self) :
-        noms_nouveaux = []
-        domaines_nouveaux = []
-        contraintes_nouveaux = []
-        couts_nouveaux = []
-        for i in range(len(self.liste)) :
-            noms_nouveaux.append(self.liste[i][0])
-            domaines_nouveaux.append(copy(self.liste[i][1]))
-        for i in range(len(self.contraintes)) :
-            temp = []
-            for j in range(len(self.contraintes[i][1])) :
-                temp.append(self.contraintes[i][1][j])
-            contraintes_nouveaux.append([self.contraintes[i][0], temp])
-        for i in range(len(self.couts)) :
-            temp = []
-            for j in range(len(self.couts[i][1])) :
-                temp.append(self.couts[i][1][j])
-            couts_nouveaux.append([self.couts[i][0], temp])
-        return CSP(noms_nouveaux, domaines_nouveaux, contraintes_nouveaux, couts_nouveaux)
+    # CSP -> unit
 
 def cout_affectation(csp, affectation) :
     cout_total = 0
@@ -220,7 +217,7 @@ def cout_suivant(csp, affectation, cout_initial, variable, valeur) :
                     valeurs.append(affectation[cout[1][i]])
             cout_total += cout[0](*valeurs)
     return cout_total
-# CSP -> int dict -> [str, int array] -> int -> int
+# CSP -> int dict -> int -> [string, int array] -> int -> int
 
 def domaine_trie(csp, affectation, variable) :
     liste = []
@@ -265,7 +262,7 @@ def domaine_restreint(csp, affectation, variable) :
         if affectation_consistante(csp, affectation_temp) :
             result.append(i)
     return array(result)
-# CSP -> int dict -> int array
+# CSP -> int dict -> [str, int array] -> int array
 
 def anticipation(csp, affectation) :
     condition = True
