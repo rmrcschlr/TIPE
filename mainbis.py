@@ -152,9 +152,9 @@ RESEAU.ajouter_ligne('L3', ['T3,0', 'C1,3', 'C2,3', 'T3,1', 'C2,3', 'C1,3'], ['T
 
 CADENCEMENTS = Cadencements(RESEAU)
 
-CADENCEMENTS.ajouter_frequence(0, 0, 29, 20)
-CADENCEMENTS.ajouter_frequence(1, 0, 29, 20)
-CADENCEMENTS.ajouter_frequence(2, 0, 29, 20)
+CADENCEMENTS.ajouter_frequence(0, 0, 29, 15)
+CADENCEMENTS.ajouter_frequence(1, 0, 29, 15)
+CADENCEMENTS.ajouter_frequence(2, 0, 29, 15)
 CADENCEMENTS.ajouter_frequence(0, 30, 59, 10)
 CADENCEMENTS.ajouter_frequence(1, 30, 59, 10)
 CADENCEMENTS.ajouter_frequence(2, 30, 59, 10)
@@ -178,25 +178,24 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
     for terminus in RESEAU.ligne_terminus(indice_ligne) :
         variables_triees[-1].append([])
         compteur = 0
-        depart = CADENCEMENTS.freq_ligne(indice_ligne)[0][0]
-        intervalle = (CADENCEMENTS.freq_ligne(indice_ligne)[0][2] // 10) + 1
-        domaine = arange(depart, depart + intervalle + 1)
+        depart, marge = CADENCEMENTS.premier_depart(indice_ligne)
+        domaine = arange(depart, depart + marge + 1)
         Probleme_initial.ajoute_variable(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur), domaine)
         variables_triees[-1][-1].append(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur))
         Probleme_initial.ajoute_cout(lambda a : a, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
         compteur += 1
-        suivant = CADENCEMENTS.prochain_depart(indice_ligne, depart)
-        while suivant != [-1, -1] :
-            depart = depart + suivant[0]
-            minimum = min(domaine + suivant[0]) - suivant[1]
-            maximum = max(domaine + suivant[0]) + suivant[1]
+        cadencement, marge = CADENCEMENTS.prochain_depart(indice_ligne, depart)
+        while cadencement != -1 :
+            depart = depart + cadencement
+            minimum = min(domaine + cadencement) - marge
+            maximum = max(domaine + cadencement) + marge
             domaine = arange(minimum, maximum + 1)
             Probleme_initial.ajoute_variable(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur), domaine)
             variables_triees[-1][-1].append(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur))
-            Probleme_initial.ajoute_contrainte(lambda a, b, ecart = suivant[0], intervalle = suivant[1] : abs(b - ecart - a) <= intervalle, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
-            Probleme_initial.ajoute_cout(lambda a, b, ecart = suivant[0], intervalle = suivant[1] : abs(b - ecart - a),[RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
+            Probleme_initial.ajoute_contrainte(lambda a, b, cadencement = cadencement, marge = marge : abs(b - cadencement - a) <= marge, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
+            Probleme_initial.ajoute_cout(lambda a, b, cadencement = cadencement : abs(b - cadencement - a),[RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur - 1), RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
             compteur +=1
-            suivant = CADENCEMENTS.prochain_depart(indice_ligne, depart)
+            cadencement, marge = CADENCEMENTS.prochain_depart(indice_ligne, depart)
 
 #raise RuntimeError("Pause")
 
@@ -254,5 +253,7 @@ if Solution[0] :
                 compteur += 1
             ligne.append(arret)
         result.append(ligne)
-print(result)
+print(critere + 1)
+print(array(result))
+print(array(hill_climbing(Horaires(result))))
 print(t2 - t1)
