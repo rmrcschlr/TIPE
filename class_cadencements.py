@@ -66,14 +66,20 @@ class Cadencements :
                     self.liste[i][j + 1][1], self.liste[i][j + 2][0] = moyenne, moyenne + 1
     # Cadencements -> unit
     
+    def premier_depart(self, indice_ligne) :
+        depart = self.freq_ligne(indice_ligne)[0][0]
+        marge = 1
+        return (depart, marge)
+    # Cadencements -> int -> (int, int)
+    
     def prochain_depart(self, indice_ligne, depart_precedent) :
         self.normaliser()
         tranche = 0
         while tranche < len(self.freq_ligne(indice_ligne)) and (self.freq_ligne(indice_ligne)[tranche][0] > depart_precedent or depart_precedent > self.freq_ligne(indice_ligne)[tranche][1]) :
             tranche += 1
-        ecart = self.freq_ligne(indice_ligne)[tranche][2]
-        if depart_precedent + ecart > self.freq_ligne(indice_ligne)[-1][1] :
-            return [-1, -1]
-        intervalle = (ecart // 10) + 1
-        return [ecart, intervalle]
-    # Cadencements -> int -> int -> [int, int]
+        cadencement = self.freq_ligne(indice_ligne)[tranche][2]
+        if depart_precedent + cadencement > self.freq_ligne(indice_ligne)[-1][1] :
+            return (-1, -1)
+        marge = 1
+        return (cadencement, marge)
+    # Cadencements -> int -> int -> (int, int)
