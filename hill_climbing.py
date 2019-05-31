@@ -22,28 +22,27 @@ def copier(liste) :
     return result
 # int array list list -> int array list list
 
-def voisins(table_terminus) :
+def voisins(horaires) :
     result = []
-    for indice_ligne in range(len(table_terminus)) :
-        for indice_terminus in range(len(table_terminus[indice_ligne])) :
-            depart = CADENCEMENTS.freq_ligne(indice_ligne)[0][0]
-            intervalle = (CADENCEMENTS.freq_ligne(indice_ligne)[0][2] // 10) + 1
-            if table_terminus[indice_ligne][indice_terminus][0] < depart + intervalle :
-                voisin = copier(table_terminus)
+    for indice_ligne in range(len(horaires.departs_terminus)) :
+        for indice_terminus in range(len(horaires.departs_terminus[indice_ligne])) :
+            condition1, condition2 = horaires.changement_depart_terminus(indice_ligne, indice_terminus, 0)
+            if condition1 :
+                voisin = copier(horaires.departs_terminus)
                 voisin[indice_ligne][indice_terminus][0] += 1
                 result.append(Horaires(voisin))
-            if table_terminus[indice_ligne][indice_terminus][0] > depart :
-                voisin = copier(table_terminus)
+            if condition2 :
+                voisin = copier(horaires.departs_terminus)
                 voisin[indice_ligne][indice_terminus][0] -= 1
                 result.append(Horaires(voisin))
-            for indice_depart in range(1, len(table_terminus[indice_ligne][indice_terminus])) :
-                suivant = CADENCEMENTS.prochain_depart(indice_ligne, table_terminus[indice_ligne][indice_terminus][indice_depart - 1])
-                if table_terminus[indice_ligne][indice_terminus][indice_depart] < table_terminus[indice_ligne][indice_terminus][indice_depart - 1] + suivant[0] + suivant[1] :
-                    voisin = copier(table_terminus)
+            for indice_depart in range(1, len(horaires.departs_terminus[indice_ligne][indice_terminus])) :
+                condition1, condition2 = horaires.changement_depart_terminus(indice_ligne, indice_terminus, indice_depart)
+                if condition1 :
+                    voisin = copier(horaires.departs_terminus)
                     voisin[indice_ligne][indice_terminus][indice_depart] += 1
                     result.append(Horaires(voisin))
-                if table_terminus[indice_ligne][indice_terminus][indice_depart] > table_terminus[indice_ligne][indice_terminus][indice_depart - 1] + suivant[0] - suivant[1] :
-                    voisin = copier(table_terminus)
+                if condition2 :
+                    voisin = copier(horaires.departs_terminus)
                     voisin[indice_ligne][indice_terminus][indice_depart] -= 1
                     result.append(Horaires(voisin))
     return result
@@ -67,7 +66,7 @@ def hill_climbing(horaires) :
     while eval_prochain < eval_actuel :
         horaires_actuels = horaires_prochains
         eval_actuel = eval_prochain
-        liste_voisins = voisins(horaires_actuels.departs_terminus)
+        liste_voisins = voisins(horaires_actuels)
         eval_prochain = eval(liste_voisins[0])
         indice_min = 0
         for indice, voisin in enumerate(liste_voisins) :
