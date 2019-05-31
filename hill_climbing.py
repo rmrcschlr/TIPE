@@ -46,7 +46,7 @@ def voisins(horaires) :
                     voisin[indice_ligne][indice_terminus][indice_depart] -= 1
                     result.append(Horaires(voisin))
     return result
-# int list list list -> Horaires
+# Horaires -> Horaires
 
 def eval(horaires) :
     somme = 0
