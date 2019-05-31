@@ -37,6 +37,16 @@ class Horaires :
         return self.liste[indice_ligne]
     # Horaires -> int -> int array list
     
+    def changement_depart_terminus(self, indice_ligne, indice_terminus, indice_depart) :
+        if indice_depart == 0 :
+            depart, marge1 = CADENCEMENTS.premier_depart(indice_ligne)
+            cadencement, marge2 = CADENCEMENTS.prochain_depart(indice_ligne, self.departs_terminus[indice_ligne][indice_terminus][0])
+            return (self.departs_terminus[indice_ligne][indice_terminus][0] < depart + marge and self.departs_terminus[indice_ligne][indice_terminus][0] < self.departs_terminus[indice_ligne][indice_terminus][1] - cadencement + marge2, self.departs_terminus[indice_ligne][indice_terminus][0] > depart and self.departs_terminus[indice_ligne][indice_terminus][0] > self.departs_terminus[indice_ligne][indice_terminus][1] - cadencement - marge2)
+        else :
+            cadencement1, marge1 = CADENCEMENTS.prochain_depart(indice_ligne, self.departs_terminus[indice_ligne][indice_terminus][indice_depart - 1])
+            cadencement2, marge2 = CADENCEMENTS.prochain_depart(indice_ligne, self.departs_terminus[indice_ligne][indice_terminus][indice_depart])
+            return (self.departs_terminus[indice_ligne][indice_terminus][indice_depart] < self.departs_terminus[indice_ligne][indice_terminus][indice_depart - 1] + cadencement1 + marge1 and self.departs_terminus[indice_ligne][indice_terminus][indice_depart] < self.departs_terminus[indice_ligne][indice_terminus][indice_depart] - cadencement2 + marge2, self.departs_terminus[indice_ligne][indice_terminus][indice_depart] > self.departs_terminus[indice_ligne][indice_terminus][indice_depart - 1] + cadencement1 - marge1 and self.departs_terminus[indice_ligne][indice_terminus][indice_depart] > self.departs_terminus[indice_ligne][indice_terminus][indice_depart] - cadencement2 - marge2)
+    
     def horaires_arret(self, indice_arret) :
         liste = []
         for indice_ligne in range(len(self.liste)) :
