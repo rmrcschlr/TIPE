@@ -1,13 +1,15 @@
+from numpy import *
+
 def map(fonction, liste) :
     result = []
     for element in liste :
         result.append(fonction(element))
     return result
 
-def prive(liste1, liste2) :
+def sans(liste, valeur) :
     result = []
-    for element in liste1 :
-        if element not in liste2 :
+    for element in liste :
+        if element != valeur :
             result.append(element)
     return result
 
@@ -53,12 +55,22 @@ def eval(horaires) :
     for indice_ligne in range(len(horaires.liste)) :
         for terminus in RESEAU.ligne_terminus(indice_ligne) :
             for heure in horaires.liste[indice_ligne][RESEAU.ligne_arrets(indice_ligne).index(terminus)] :
-                for autre_terminus in prive(RESEAU.liste_terminus(), RESEAU.ligne_terminus(indice_ligne)) :
-                    somme += Dijkstra_adapte(RESEAU.matrice_segments, horaires, terminus, autre_terminus, heure)[0] - heure
+                somme += sum(array(Dijkstra_adapte(RESEAU.matrice_segments, horaires, terminus, heure)) - heure)
     return somme
 # Horaires -> int
 
+def nombre_de_trajets(horaires) :
+    nombre_de_trajets = 0
+    for indice_ligne in range(len(horaires.liste)) :
+        for terminus in RESEAU.ligne_terminus(indice_ligne) :
+            for heure in horaires.liste[indice_ligne][RESEAU.ligne_arrets(indice_ligne).index(terminus)] :
+                for autre_terminus in sans(RESEAU.liste_terminus(), terminus) :
+                    nombre_de_trajets += 1
+    return nombre_de_trajets
+# Horaires -> int
+
 def hill_climbing(horaires) :
+    nb_trajets_total = nombre_de_trajets(horaires)
     horaires_actuels = horaires
     horaires_prochains = horaires
     eval_prochain = eval(horaires_actuels)
@@ -76,5 +88,5 @@ def hill_climbing(horaires) :
                 indice_min = indice
         horaires_prochains = liste_voisins[indice_min]
         print(eval_prochain)
-    return horaires_actuels.departs_terminus
-# Horaires -> int list list list
+    return horaires_actuels
+# Horaires -> Horaires
