@@ -31,7 +31,7 @@ liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'C']
 
 matrice = []
 for i in range(4) :
-    matrice.append((i * [-1]) + [0] + ((3 - i) * [-1]))
+    matrice.append((i * [inf]) + [0] + ((3 - i) * [inf]))
 matrice[0].append(1)
 matrice[1].append(2)
 matrice[2].append(3)
@@ -55,7 +55,7 @@ liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C']
 
 matrice = []
 for i in range(6) :
-    matrice.append((i * [-1]) + [0] + ((5 - i) * [-1]))
+    matrice.append((i * [inf]) + [0] + ((5 - i) * [inf]))
 matrice[0].append(1)
 matrice[1].append(2)
 matrice[2].append(3)
@@ -84,21 +84,21 @@ liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C1,2', 'C1,3']
 
 matrice = []
 for i in range(6) :
-    matrice.append((i * [-1]) + [0] + ((5 - i) * [-1]))
+    matrice.append((i * [inf]) + [0] + ((5 - i) * [inf]))
 matrice[0].append(1)
-matrice[0].append(-1)
-matrice[1].append(-1)
+matrice[0].append(inf)
+matrice[1].append(inf)
 matrice[1].append(2)
 matrice[2].append(3)
-matrice[2].append(-1)
+matrice[2].append(inf)
 matrice[3].append(4)
-matrice[3].append(-1)
-matrice[4].append(-1)
+matrice[3].append(inf)
+matrice[4].append(inf)
 matrice[4].append(5)
-matrice[5].append(-1)
+matrice[5].append(inf)
 matrice[5].append(6)
-matrice.append([1, -1, 3, 4, -1, -1, 0, 7])
-matrice.append([-1, 2, -1, -1, 5, 6, 7, 0])
+matrice.append([1, inf, 3, 4, inf, inf, 0, 7])
+matrice.append([inf, 2, inf, inf, 5, 6, 7, 0])
 
 RESEAU = Reseau(liste, matrice)
 
@@ -120,29 +120,29 @@ liste = ['T1,0', 'T1,1', 'T2,0', 'T2,1', 'T3,0', 'T3,1', 'C1,2', 'C1,3', 'C2,3']
 
 matrice = []
 for i in range(6) :
-    matrice.append((i * [-1]) + [0] + ((5 - i) * [-1]))
+    matrice.append((i * [inf]) + [0] + ((5 - i) * [inf]))
 matrice[0].append(1)
-matrice[0].append(-1)
-matrice[0].append(-1)
-matrice[1].append(-1)
+matrice[0].append(inf)
+matrice[0].append(inf)
+matrice[1].append(inf)
 matrice[1].append(2)
-matrice[1].append(-1)
+matrice[1].append(inf)
 matrice[2].append(3)
-matrice[2].append(-1)
-matrice[2].append(-1)
-matrice[3].append(-1)
-matrice[3].append(-1)
+matrice[2].append(inf)
+matrice[2].append(inf)
+matrice[3].append(inf)
+matrice[3].append(inf)
 matrice[3].append(4)
-matrice[4].append(-1)
+matrice[4].append(inf)
 matrice[4].append(5)
-matrice[4].append(-1)
-matrice[5].append(-1)
-matrice[5].append(-1)
+matrice[4].append(inf)
+matrice[5].append(inf)
+matrice[5].append(inf)
 matrice[5].append(6)
 
-matrice.append([1, -1, 3, -1, -1, -1, 0, 7, 8])
-matrice.append([-1, 2, -1, -1, 5, -1, 7, 0, 9])
-matrice.append([-1, -1, -1, 4, -1, 6, 8, 9, 0])
+matrice.append([1, inf, 3, inf, inf, inf, 0, 7, 8])
+matrice.append([inf, 2, inf, inf, 5, inf, 7, 0, 9])
+matrice.append([inf, inf, inf, 4, inf, 6, 8, 9, 0])
 
 RESEAU = Reseau(liste, matrice)
 
@@ -254,6 +254,13 @@ if Solution[0] :
             ligne.append(arret)
         result.append(ligne)
 print(critere + 1)
-print(array(result))
-print(array(hill_climbing(Horaires(result))))
+Solution1 = Horaires(result)
+print(array(Solution1.departs_terminus))
+print(eval(Solution1) / nombre_de_trajets(Solution1))
+t3 = time()
+Solution2 = hill_climbing(Solution1)
+t4 = time()
+print(array(Solution2.departs_terminus))
+print(eval(Solution2) / nombre_de_trajets(Solution2))
 print(t2 - t1)
+print(t4 - t3)
