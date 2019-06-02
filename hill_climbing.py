@@ -64,8 +64,7 @@ def nombre_de_trajets(horaires) :
     for indice_ligne in range(len(horaires.liste)) :
         for terminus in RESEAU.ligne_terminus(indice_ligne) :
             for heure in horaires.liste[indice_ligne][RESEAU.ligne_arrets(indice_ligne).index(terminus)] :
-                for autre_terminus in sans(RESEAU.liste_terminus(), terminus) :
-                    nombre_de_trajets += 1
+                nombre_de_trajets += len(RESEAU.liste_arrets) - 1
     return nombre_de_trajets
 # Horaires -> int
 
