@@ -167,11 +167,13 @@ CADENCEMENTS.ajouter_frequence(1, 30, 59, 11)
 CADENCEMENTS.ajouter_frequence(2, 30, 59, 13)
 """
 
-t1 = time()
+
+
 Probleme_initial = CSP()
 
-###Rentre les variables et leur domaine dans le CSP
+### Rentre les variables et leur domaine dans le CSP
 
+t1 = time()
 variables_triees = []
 for indice_ligne in range(len(RESEAU.liste_lignes)) :
     variables_triees.append([])
@@ -182,7 +184,7 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
         domaine = arange(depart, depart + marge + 1)
         Probleme_initial.ajoute_variable(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur), domaine)
         variables_triees[-1][-1].append(RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur))
-        Probleme_initial.ajoute_cout(lambda a : a, [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
+        Probleme_initial.ajoute_cout(lambda a, depart = depart : abs(a - depart), [RESEAU.nom_ligne(indice_ligne) + ';' + RESEAU.nom_arret(terminus) + ';' + str(compteur)])
         compteur += 1
         cadencement, marge = CADENCEMENTS.prochain_depart(indice_ligne, depart)
         while cadencement != -1 :
@@ -199,7 +201,7 @@ for indice_ligne in range(len(RESEAU.liste_lignes)) :
 
 #raise RuntimeError("Pause")
 
-### Résout le CSP avec critere
+### Résout le CSP
 
 ecart_max = 0
 for indice_ligne in range(len(CADENCEMENTS.liste)) :
@@ -227,7 +229,7 @@ while solution_trouvee and critere > 0 :
                             temps2 = RESEAU.duree(indice_ligne, indice_terminus, indice_arret)
                             if temps2 != -1 :
                                 domaine_variable_actuelle = Probleme_complet.domaine_variable(tranche_variables[indice_variable])
-                                domaine_reference = arange(domaine_variable_actuelle[0], domaine_variable_actuelle[-1] + critere + 1)
+                                domaine_reference = arange(domaine_variable_actuelle[0] + temps1 - temps2, domaine_variable_actuelle[-1] + critere  + temps1 - temps2 + 1)
                                 variables_utiles = []
                                 for nom in variables_triees[indice_ligne][RESEAU.ligne_terminus(indice_ligne).index(indice_terminus)] :
                                     if not(array_equal(intersect1d(domaine_reference, Probleme_complet.domaine_variable(nom)), [])) :
@@ -239,8 +241,10 @@ while solution_trouvee and critere > 0 :
     if solution_trouvee :
         Solution = Solution_potentielle 
 
-### Affiche la solution dans une liste
 t2 = time()
+
+### Rentre la premiere solution dans une liste
+
 if Solution[0] :
     result = []
     for indice_ligne in range(len(RESEAU.liste_lignes)) :
@@ -253,14 +257,31 @@ if Solution[0] :
                 compteur += 1
             ligne.append(arret)
         result.append(ligne)
+
+### Affiche le seuil atteint
+
 print(critere + 1)
+
+### Affiche la grille des départs et le temps moyen de la premiere solution
+
 Solution1 = Horaires(result)
 print(array(Solution1.departs_terminus))
-print(eval(Solution1) / nombre_de_trajets(Solution1))
+eval1, nb1 = eval(Solution1)
+print(eval1 / nb1)
+
+### Résout le hill-climbing
+
 t3 = time()
 Solution2 = hill_climbing(Solution1)
 t4 = time()
+
+### Affiche la grille des départs et le temps moyen de la premiere solution
+
 print(array(Solution2.departs_terminus))
-print(eval(Solution2) / nombre_de_trajets(Solution2))
+eval2, nb2 = eval(Solution2)
+print(eval2 / nb2)
+
+### Affiche les temps d'execution
+
 print(t2 - t1)
 print(t4 - t3)
