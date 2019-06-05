@@ -60,9 +60,10 @@ class Cadencements :
     def normaliser(self) :
         self.trier()
         for i in range(len(self.liste)) :
-            for j in range(len(self.freq_ligne(i)) - 1) :
-                if self.freq_ligne(i)[j][1] >= self.freq_ligne(i)[j + 1][0] :
-                    moyenne = (self.freq_ligne(i)[j][1] + self.freq_ligne(i)[j + 1][0]) // 2
+            freq = self.freq_ligne(i)
+            for j in range(len(freq) - 1) :
+                if freq[j][1] >= freq[j + 1][0] :
+                    moyenne = (freq[j][1] + freq[j + 1][0]) // 2
                     self.liste[i][j + 1][1], self.liste[i][j + 2][0] = moyenne, moyenne + 1
     # Cadencements -> unit
     
@@ -75,10 +76,11 @@ class Cadencements :
     def prochain_depart(self, indice_ligne, depart_precedent) :
         self.normaliser()
         tranche = 0
-        while tranche < len(self.freq_ligne(indice_ligne)) and (self.freq_ligne(indice_ligne)[tranche][0] > depart_precedent or depart_precedent > self.freq_ligne(indice_ligne)[tranche][1]) :
+        freq = self.freq_ligne(indice_ligne)
+        while tranche < len(freq) and (freq[tranche][0] > depart_precedent or depart_precedent > freq[tranche][1]) :
             tranche += 1
-        cadencement = self.freq_ligne(indice_ligne)[tranche][2]
-        if depart_precedent + cadencement > self.freq_ligne(indice_ligne)[-1][1] :
+        cadencement = freq[tranche][2]
+        if depart_precedent + cadencement > freq[-1][1] :
             return (-1, -1)
         marge = 1
         return (cadencement, marge)
