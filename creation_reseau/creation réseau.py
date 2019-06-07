@@ -1,7 +1,7 @@
 import os as os
 from numpy import inf
 
-os.chdir("E:\TIPE")
+os.chdir("/tmp/guest-ibqid6/Téléchargements/TIPE-master/creation_reseau")
 f=open("Horaires.csv",'r')
 txt = f.read()
 
@@ -10,6 +10,7 @@ for i in range(len(txt)):
     txt[i] = txt[i].split(",")
 
 for i in range(len(txt)):
+    print(i)
     txt[i][0]=int(txt[i][0])
     txt[i][3]=int(txt[i][3])
     txt[i][5]=txt[i][5].split("h")
@@ -37,8 +38,14 @@ for i in range(len(itinerances)):
 
 lignes = [[] for i in range(18)]
 
+def nouveau(l1,l2):
+    i = 0
+    while i<len(l2) and (l2[i] in l1) :
+        i+=1
+    return i<len(l2)
+
 for i in range(1,len(txt)):
-    if txt[i][3]!=txt[i-1][3] or itinerances[arrets.index(txt[i][1])]!=itinerances[arrets.index(txt[i-1][1])]:
+    if txt[i][3]!=txt[i-1][3] or nouveau(itinerances[arrets.index(txt[i-1][1])],itinerances[arrets.index(txt[i][1])]):
         lignes[txt[i][0]].append(txt[i][1])
         
 arrets_opti =[]
@@ -73,13 +80,19 @@ for k in range(len(txt_par_ligne)):
             j=temp
             s=0
             
-lignes2 = lignes.copy()
+lignes2 = [[] for i in range(18)]
 
-for i in range(len(lignes)):
+lignes2[1].append("Hôpital Cavale 2")
+
+for i in range(1,len(txt)):
+    if (txt[i][1] in arrets_opti) and (txt[i-1][3]==txt[i][3] or txt[i-1][0]!=txt[i][0]):
+        lignes2[txt[i][0]].append(txt[i][1])
+
+"""for i in range(len(lignes)):
     l=[]
     for j in range(1,len(lignes[i])):
         if lignes[i][j-1] == lignes[i][j] or not(lignes[i][j] in arrets_opti):
             l.append(j-1)
     print(l)
     for k in range(len(l)):
-        del lignes2[i][l[k]-k]
+        del lignes2[i][l[k]-k]"""
