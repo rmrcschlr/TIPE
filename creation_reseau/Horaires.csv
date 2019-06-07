@@ -11,8 +11,8 @@
 1,Albert 1er, Brest,1,05h55,06h10,06h25,06h35,06h43,06h52
 1,Malakoff, Brest,1,05h56,06h11,06h26,06h36,06h44,06h53
 1,Hôtel de Ville, Brest,1,05h58,06h13,06h28,06h38,06h46,06h55
-1,Liberté Place, Brest,1,05h59,06h14,06h29,06h39,06h47,06h56
-1,Liberté Quartz, Brest,1,06h00,06h15,06h30,06h40,06h48,06h57
+1,Liberté, Brest,1,05h59,06h14,06h29,06h39,06h47,06h56
+1,Liberté, Brest,1,06h00,06h15,06h30,06h40,06h48,06h57
 1,Kennedy gare, Brest,1,06h01,06h16,06h31,06h41,06h49,06h58
 1,Gare SNCF, Brest,1,06h02,06h17,06h32,06h42,06h50,06h59
 1,Kennedy Gare, Brest,1,06h02,06h17,06h32,06h42,06h50,06h59
@@ -54,8 +54,8 @@
 1,Rampes, Brest,-1,-,05h55,06h10,06h25,06h35,06h45
 1,Kennedy Gare, Brest,-1,-,05h57,06h12,06h27,06h37,06h47
 1,Gare SNCF, Brest,-1,-,05h58,06h13,06h28,06h38,06h48
-1,Liberté Quartz, Brest,-1,05h50,06h00,06h15,06h30,06h40,06h50
-1,Liberté Place, Brest,-1,05h51,06h01,06h16,06h31,06h41,06h51
+1,Liberté, Brest,-1,05h50,06h00,06h15,06h30,06h40,06h50
+1,Liberté, Brest,-1,05h51,06h01,06h16,06h31,06h41,06h51
 1,Hôtel de Ville, Brest,-1,05h51,06h01,06h16,06h31,06h41,06h51
 1,Malakoff, Brest,-1,05h53,06h03,06h18,06h33,06h43,06h53
 1,Albert 1er, Brest,-1,05h54,06h04,06h19,06h34,06h44,06h54
@@ -91,8 +91,8 @@
 3,Sané, Brest,1,06h02,06h22,06h46,07h06,07h21,07h36
 3,République, Brest,1,06h03,06h23,06h48,07h08,07h23,07h38
 3,Gambetta gare, Brest,1,06h04,06h24,06h49,07h09,07h24,07h39
-3,Liberté Quartz, Brest,1,06h05,06h25,06h50,07h10,07h25,07h40
-3,Liberté Place, Brest,1,06h06,06h26,06h51,07h11,07h26,07h41
+3,Liberté, Brest,1,06h05,06h25,06h50,07h10,07h25,07h40
+3,Liberté, Brest,1,06h06,06h26,06h51,07h11,07h26,07h41
 3,Hôtel de Ville, Brest,1,06h06,06h26,06h51,07h12,07h27,07h42
 3,Malakoff, Brest,1,06h08,06h28,06h53,07h13,07h28,07h44
 3,Albert 1er, Brest,1,06h09,06h29,06h54,07h15,07h30,07h46
@@ -127,8 +127,8 @@
 3,Albert 1er, Brest,-1,05h56,06h16,06h45,07h10,07h29,07h39
 3,Malakoff, Brest,-1,05h57,06h17,06h46,07h11,07h30,07h40
 3,Hôtel de Ville, Brest,-1,05h58,06h18,06h48,07h13,07h33,07h43
-3,Liberté Place, Brest,-1,05h59,06h19,06h49,07h14,07h34,07h44
-3,Liberté Quartz, Brest,-1,06h00,06h20,06h50,07h15,07h35,07h45
+3,Liberté, Brest,-1,05h59,06h19,06h49,07h14,07h34,07h44
+3,Liberté, Brest,-1,06h00,06h20,06h50,07h15,07h35,07h45
 3,Gambetta gare, Brest,-1,06h01,06h21,06h51,07h16,07h36,07h46
 3,République, Brest,-1,06h02,06h22,06h52,07h17,07h37,07h47
 3,Sané, Brest,-1,06h03,06h23,06h53,07h19,07h39,07h49
@@ -158,7 +158,7 @@
 4,Port du Château, Brest,1,05h51,06h21,06h50,07h08,07h24,07h43
 4,Rampes, Brest,1,05h52,06h22,06h51,07h09,07h25,07h44
 4,Kennedy Gare, Brest,1,05h54,06h24,06h53,07h11,07h27,07h46
-4,Liberté Quartz, Brest,1,05h55,06h25,06h54,07h12,07h29,07h48
+4,Liberté, Brest,1,05h55,06h25,06h54,07h12,07h29,07h48
 4,Multiplexe, Brest,1,05h56,06h26,06h55,07h13,07h30,07h49
 4,Harteloire, Brest,1,05h57,06h27,06h56,07h14,07h31,07h50
 4,Coppin, Brest,1,05h58,06h28,06h57,07h15,07h32,07h51
@@ -199,7 +199,7 @@
 4,Coppin, Brest,-1,05h58,06h33,06h49,07h06,07h23,07h42
 4,Harteloire, Brest,-1,05h58,06h33,06h49,07h06,07h23,07h43
 4,Multiplexe, Brest,-1,05h59,06h34,06h50,07h07,07h24,07h44
-4,Liberté Quartz, Brest,-1,06h00,06h35,06h51,07h08,07h25,07h45
+4,Liberté, Brest,-1,06h00,06h35,06h51,07h08,07h25,07h45
 4,Kennedy gare, Brest,-1,06h01,06h36,06h52,07h09,07h26,07h46
 4,Rampes, Brest,-1,06h02,06h37,06h53,07h11,07h28,07h47
 4,Port du Château, Brest,-1,06h03,06h38,06h54,07h12,07h29,07h48
@@ -225,7 +225,7 @@
 5,Portzmoguer, Brest,1,06h17,06h42,06h56,07h12,07h29,07h47
 5,CAF, Brest,1,06h18,06h43,06h57,07h13,07h30,07h48
 5,Multiplexe, Brest,1,06h19,06h44,06h58,07h14,07h31,07h49
-5,Liberté Quartz, Brest,1,06h20,06h45,06h59,07h15,07h32,07h50
+5,Liberté, Brest,1,06h20,06h45,06h59,07h15,07h32,07h50
 5,Gambetta gare, Brest,1,06h21,06h46,07h00,07h16,07h33,07h51
 5,République, Brest,1,06h22,06h47,07h01,07h17,07h34,07h52
 5,Sané, Brest,1,06h23,06h48,07h02,07h18,07h36,07h53
@@ -235,7 +235,7 @@
 5,Guynemer, Brest,1,06h26,06h51,07h05,07h22,07h41,07h57
 5,Rodin, Brest,1,06h27,06h52,07h06,07h23,07h42,07h58
 5,Lyautey, Brest,1,06h27,06h52,07h06,07h24,07h43,07h59
-5,Strasbourg (Valmy), Brest,1,06h28,06h53,07h07,07h25,07h44,08h00
+5,Strasbourg (A Louppe), Brest,1,06h28,06h53,07h07,07h25,07h44,08h00
 5,Strasbourg (rte de Paris), Brest,1,06h29,06h54,07h08,07h26,07h45,08h01
 5,Pen ar Creach, Brest,1,06h29,06h54,07h08,07h26,07h45,08h01
 5,Coq Hardi, Brest,1,06h30,06h55,07h09,07h27,07h46,08h02
@@ -298,7 +298,7 @@
 5,Coq Hardi, Brest,-1,06h04,06h34,06h52,07h10,07h32,07h47
 5,Pen ar Creach, Brest,-1,06h05,06h35,06h53,07h11,07h33,07h48
 5,Strasbourg (rte de Paris), Brest,-1,06h05,06h35,06h53,07h11,07h33,07h48
-5,Strasbourg (valmy), Brest,-1,06h06,06h36,06h54,07h12,07h34,07h49
+5,Strasbourg (A Louppe), Brest,-1,06h06,06h36,06h54,07h12,07h34,07h49
 5,Lyautey, Brest,-1,06h07,06h37,06h55,07h13,07h35,07h50
 5,Rodin, Brest,-1,06h07,06h37,06h55,07h14,07h36,07h51
 5,Guynemer, Brest,-1,06h08,06h38,06h56,07h15,07h37,07h52
@@ -308,7 +308,7 @@
 5,Sané, Brest,-1,06h12,06h42,07h00,07h20,07h42,07h57
 5,République, Brest,-1,06h13,06h43,07h01,07h21,07h43,07h58
 5,Gambetta gare, Brest,-1,06h14,06h44,07h02,07h22,07h44,07h59
-5,Liberté Quartz, Brest,-1,06h15,06h45,07h03,07h23,07h45,08h00
+5,Liberté, Brest,-1,06h15,06h45,07h03,07h23,07h45,08h00
 5,Multiplexe, Brest,-1,06h16,06h46,07h04,07h24,07h46,08h01
 5,Caf, Brest,-1,06h17,06h47,07h05,07h25,07h47,08h02
 5,Portzmoguer, Brest,-1,06h18,06h48,07h06,07h26,07h48,08h03
@@ -461,8 +461,8 @@
 7,Kerigonan, Brest,1,06h20,06h47,07h17,07h28,07h48,08h03
 7,Malakoff, Brest,1,06h21,06h48,07h18,07h29,07h49,08h04
 7,Hôtel de Ville, Brest,1,06h22,06h49,07h19,07h30,07h50,08h05
-7,Liberté Frézier, Brest,1,06h23,06h50,07h20,07h31,07h51,08h06
-7,Liberté Frézier, Brest,-1,06h00,06h25,06h55,07h10,07h25,07h40
+7,Liberté, Brest,1,06h23,06h50,07h20,07h31,07h51,08h06
+7,Liberté, Brest,-1,06h00,06h25,06h55,07h10,07h25,07h40
 7,Hôtel de Ville, Brest,-1,06h00,06h25,06h55,07h10,07h25,07h41
 7,Malakoff, Brest,-1,06h02,06h27,06h57,07h12,07h27,07h43
 7,Kerigonan, Brest,-1,06h03,06h28,06h58,07h13,07h28,07h44
@@ -526,8 +526,8 @@
 8,Albert 1er, Brest,1,06h22,06h54,07h11,07h23,07h43,07h55
 8,Malakoff, Brest,1,06h23,06h55,07h12,07h24,07h44,07h56
 8,Hôtel de Ville, Brest,1,06h24,06h56,07h13,07h25,07h45,07h57
-8,Liberté Frézier, Brest,1,06h25,06h57,07h14,07h26,07h46,07h58
-8,Liberté Place, Brest,-1,06h30,07h00,07h20,07h35,07h55,08h10
+8,Liberté, Brest,1,06h25,06h57,07h14,07h26,07h46,07h58
+8,Liberté, Brest,-1,06h30,07h00,07h20,07h35,07h55,08h10
 8,Hôtel de Ville, Brest,-1,06h31,07h01,07h21,07h36,07h56,08h11
 8,Malakoff, Brest,-1,06h32,07h02,07h22,07h38,07h58,08h13
 8,Albert 1er, Brest,-1,06h33,07h03,07h23,07h39,07h59,08h14
@@ -581,8 +581,8 @@
 9,Universités, Brest,1,06h24,07h15,07h41,08h16,08h41,09h15
 9,Foch, Brest,1,06h25,07h17,07h43,08h18,08h43,09h17
 9,Hôpital Morvan (côté Fac Segalen), Brest,1,06h27,07h18,07h44,08h19,08h44,09h18
-9,Liberté Morvan, Brest,1,06h27,07h19,07h45,08h20,08h45,09h19
-9,Liberté Morvan, Brest,-1,06h30,07h25,07h55,08h25,08h55,09h25
+9,Liberté, Brest,1,06h27,07h19,07h45,08h20,08h45,09h19
+9,Liberté, Brest,-1,06h30,07h25,07h55,08h25,08h55,09h25
 9,Multiplexe, Brest,-1,06h32,07h27,07h57,08h27,08h57,09h27
 9,Hôpital Morvan, Brest,-1,06h33,07h28,07h58,08h28,08h58,09h28
 9,Foch, Brest,-1,06h34,07h29,07h59,08h29,08h59,09h29
@@ -602,7 +602,7 @@
 9,Bohars Bourg, Bohars,-1,06h49,07h44,08h14,08h44,09h14,09h44
 9,Pen Ar Guear, Bohars,-1,06h50,07h45,08h15,08h45,09h15,09h45
 9,Petite Gare, Bohars,-1,06h51,07h46,08h16,08h46,09h16,09h46
-10,Liberté Morvan, Brest,1,06h33,06h58,07h18,07h33,07h48,08h08
+10,Liberté, Brest,1,06h33,06h58,07h18,07h33,07h48,08h08
 10,Multiplexe, Brest,1,06h35,07h00,07h20,07h35,07h50,08h10
 10,Hôpital Morvan, Brest,1,06h35,07h00,07h21,07h36,07h51,08h11
 10,Foch, Brest,1,06h37,07h02,07h22,07h37,07h52,08h12
@@ -662,7 +662,7 @@
 10,Universités, Brest,-1,06h26,06h47,07h07,07h24,07h40,07h57
 10,Foch, Brest,-1,06h27,06h48,07h08,07h26,07h42,07h59
 10,Hôpital Morvan (côté Fac Segalen), Brest,-1,06h29,06h50,07h10,07h27,07h43,08h00
-10,Liberté Morvan, Brest,-1,06h29,06h50,07h10,07h28,07h44,08h01
+10,Liberté, Brest,-1,06h29,06h50,07h10,07h28,07h44,08h01
 11,Strasbourg (jaures), Brest,1,06h30,06h57,07h20,07h35,07h55,08h10
 11,Strasbourg (A Louppe), Brest,1,06h31,06h58,07h22,07h37,07h57,08h12
 11,Strasbourg (Rte de Quimper), Brest,1,06h32,06h59,07h23,07h38,07h58,08h13
