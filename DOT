@@ -1,6 +1,6 @@
-Septembre : Découverte de la méthode de programmation par contraintes (PPC) pour l'optimisation de réseau de transport dans ??
-Octobre : Choix de l'obectif du TIPE : réduire le temps de parcours moyen dans le réseau en modifiant les horaires de départs.
-Novembre : Résolution de l'optimisation par PPC où le temps de correspondance est discriminant, à l'aide d'un module python existant sur des listes pour le réseau et cadencements.
+Septembre : Découverte de la méthode de programmation par contraintes (PPC) pour l'optimisation de réseau de transport grâce à la référence [2].
+Octobre : Choix de l'obectif du TIPE de réduire le temps de parcours moyen dans le réseau en modifiant les horaires de départs.
+Novembre : Résolution de l'optimisation par PPC où le temps de correspondance est discriminant, à l'aide d'un module python existant et de listes pour le réseau et cadencements.
 Décembre-Janvier : Création de la classe PPC, permetant de réduire le temps d'éxecution de la première étape de résolution, puis des classes réseau et cadencements.
 Février : Résolution de la première partie à l'aide des nouvelles classes.
 Mars-Avril : Tentative de résolution de la seconde étape à l'aide d'un Djikstra adapté.
