@@ -5,4 +5,4 @@ Décembre-Janvier : Création de la classe PPC, permetant de réduire le temps d
 Février : Résolution de la première partie à l'aide des nouvelles classes.
 Mars-Avril : Tentative de résolution de la seconde étape à l'aide d'un Djikstra adapté.
 Mai : Adaptation de la méthode de Hill-Climbing pour résoudre la seconde étape.
-Juin : Comparaison et test sur le réseau de bus brestois (bibus)
+Juin : Comparaison et test sur le réseau de bus de Brest
